@@ -31,7 +31,7 @@ class data_logger:
                               'content': 'The first half of the year is in the rearview mirror. Although forecasting the stock market for the next six months is always tricky, I can say this for sure: There is an 84% chance the second half will start with a bang.\r\nWhy is that? \r\nHistorically, the fir… [+2312 chars]'}]}
     
     def establish_connection(self):
-        KEY = '8e500c992adf43d680f652f336311b61'
+        KEY = My_KEY
         return NewsApiClient(api_key=KEY)
 
     def dataRefresh(self, api: NewsApiClient, keyword: str, random_news:bool = False) -> {}:
