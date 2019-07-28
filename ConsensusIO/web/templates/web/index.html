@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index page</title>
+</head>
+<nav>
+        <ul>
+            <li><a href="{% url 'web:index' %}">LOGO</a></li>
+            <li><a href="{% url 'web:about' %}">About</a></li>
+            <li><a href="{% url 'web:acknowledgments' %}">Acknowledgments</a></li>
+        </ul>
+</nav>
+<body>
+    <form autocomplete="off" action="{% url 'web:search' %}" method="post">
+        {% csrf_token %}
+        <div class="autocomplete" style="width:400px;">
+        <input type="text" name="search" id="search">
+        </div>
+        <input type="submit" value="Search">
+    </form>
+    <section>
+        {% for stock in home_stocks.0 %}
+            <li>{{stock.name}}: {{ stock.p_neg }}, {{ stock.p_ind }}, {{ stock.p_pos }} <img src="{{stock.logo_img}}" style="width:2%;height:2%;"></li>
+        {% endfor %}
+    </section>
+</body>
+
+</html>
