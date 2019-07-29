@@ -7,10 +7,11 @@ class Company(models.Model):
     name = models.CharField(unique=True, max_length = 255)
     logo_img = models.TextField(null=True, blank=True)
     common_name = models.CharField(null=True, blank=True, max_length = 100)
+    last_blank_day = models.DateField(null=True, blank=True)
 
-    p_neg = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
-    p_ind = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
-    p_pos = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    p_neg = models.IntegerField(null=True, blank=True)
+    p_ind = models.IntegerField(null=True, blank=True)
+    p_pos = models.IntegerField(null=True, blank=True)
     def __str__(self):
         return self.name
 
@@ -37,7 +38,8 @@ class Price(models.Model):
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     date = models.DateField(default = timezone.now().date())
     price = models.FloatField(default=0.0)
+    change_pct = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     def __str__(self):
-        return ': $'.join([str(self.date),str(self.price)])
+        return ': $'.join([str(self.date),str(self.price), str(self.change_pct)])
     class Meta :
         unique_together = ('company_id', 'date')

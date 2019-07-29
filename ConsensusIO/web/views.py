@@ -6,6 +6,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.db.models import Q
 from web.ApiWrapper.NewsApiWrapper import NewsApiWrapper
+from web.ApiWrapper.PriceApiWrapper import get_price
 
 #def migratedbs():
 #     BASE = os.path.dirname(os.path.abspath(__file__))
@@ -22,9 +23,9 @@ class IndexView(ListView):
 
     def get_queryset(self):
         news_wrapper = NewsApiWrapper()
-        company_set = Company.objects.filter(pk__in=['TWTR', 'AAPL'])
+        company_set = Company.objects.filter(pk__in=['TWTR', 'AAPL', 'MSFT', 'AMZN', 'FB', 'BRK.B', 'GOOGL', 'JPM', 'JNJ', 'BAC', 'PG', 'DIS'])
         for company in company_set:
-            if not company:
+            if not company.article_set.all():
                 news_wrapper.update_company(company)
         return company_set if type(company_set) is list else [company_set]
 
@@ -34,26 +35,37 @@ class SearchView(ListView):
     model = Article
     context_object_name = 'user_search'
     date = timezone.now().date()
-    yesterday = (date - timedelta(days=1)).strftime('%Y-%m-%d')
+
     def get_queryset(self):
         query = self.request.GET.get('search_bar')
-        try:
-            company = Company.objects.filter( Q(name__icontains = query)
-                                            | Q(ticker=query)
-                                            | Q(common_name__icontains = query))[0]
-        except IndexError:
+        company = None
+        for query_result in [Company.objects.filter(ticker=query),
+                             Company.objects.filter(common_name__icontains = query),
+                             Company.objects.filter(name__icontains = query)
+                            ]:
+            try:
+                company = query_result[0]
+                break
+            except IndexError:
+                continue
+        if not company:
             return {'error_view':True, 'error_msg' : ' '.join(["No company found with name:", query])}
-        NewsApiWrapper().update_company(company)
-        news_set = company.article_set.filter(date__in=[self.date, self.yesterday], isFin=True)
+        _ , time_delta = NewsApiWrapper().update_company(company)
+        if not time_delta:
+            return {'error_view':True,
+                    'error_msg' : ''.join(["Could not find any any news for company \"", company.name, "\" in past 30 days"]),
+                    'error_submsg': 'Not the company you were looking for? Try searching its',
+                    'error_submsg_link': 'https://www.marketwatch.com/tools/quotes/lookup.asp',
+                    }
+        news_set = company.article_set.filter(date__in=[self.date, self.date - time_delta], isFin=True)
+
         return {'company':company,
                 'pos_set': news_set.filter(sentiment=2),
                 'mixed_set': news_set.filter(sentiment=1),
                 'neg_set': news_set.filter(sentiment=0),
                 'non_fin_set': company.article_set.filter(isFin=False),
-                'price': '$1'
+                'price': get_price(company, self.date)
                 }
-        
-
 def acknowledgments(request):
     return render(request, 'web/acknowledgments.html', {})
 

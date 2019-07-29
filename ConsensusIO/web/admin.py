@@ -11,7 +11,7 @@ class  ArticleInline(admin.TabularInline):
 class CompanyAdmin(admin.ModelAdmin):
     fieldsets = [
         ('General', {
-            'fields': ['name', 'ticker', 'logo_img', 'common_name']
+            'fields': ['name', 'ticker', 'logo_img', 'common_name', 'last_blank_day']
         })
     ]
     inlines = [ArticleInline]

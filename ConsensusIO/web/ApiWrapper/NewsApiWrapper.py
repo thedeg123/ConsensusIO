@@ -8,35 +8,54 @@ from django.db import IntegrityError
 
 class NewsApiWrapper:
     def __init__(self):
-        self.date = timezone.now().date()
-        self.yesterday = (self.date - timedelta(days=1)).strftime('%Y-%m-%d')
+        self.today = timezone.now().today()
+        self.start_date = (self.today - timedelta(days=1)).strftime('%Y-%m-%d')
     
     def update_company(self, company: Company):
-        company.p_neg,company.p_ind, company.p_pos = self.__get_avg_news_set__(company)
+        '''
+        either polling the database for news or if none is found, getting new news going back by week if none was found for that week.
+        If no news was published in past month, returning none.
+        '''
+        if company.last_blank_day == self.today.date():
+            return None, None
+        article_set, time_delta = self.__get_avg_news_set__(company)
+        if len(article_set)==0:
+            return None, None
+        company.p_neg,company.p_ind, company.p_pos = article_set
         company.save()
-        return company
+        return company, time_delta
+
     def __get_avg_news_set__(self, company: Company):
+        for time_delta in [timedelta(days=1), timedelta(days=7), timedelta(days=14), timedelta(days=21), timedelta(days=27)]:
+            self.start_date = (self.today - time_delta).strftime('%Y-%m-%d')
+            article_set = self.__get_avg_news_set_for_date__(company)
+            if len(article_set)>0:
+                return (article_set, time_delta)
+        company.last_blank_day = self.today
+        company.save()
+        return ([], None)
+        
+    def __get_avg_news_set_for_date__(self, company: Company):
         article_sent = np.zeros(3)
         news_set = self.__fetch_news_set__(company)
-        if not news_set:
-            return None
+        if len(news_set)==0:
+            return []
         for article in news_set:
             article_sent[int(article.sentiment)]+=1
-        
-        return article_sent/sum(article_sent)
+        return (article_sent/sum(article_sent)*100).astype(int)
     def __fetch_news_set__(self, company: Company):
         '''
         Checks the database to see if articles from today exist, if not dbs is populated
         '''
-        article_set = Article.objects.filter(date__in = [self.date, self.yesterday], isFin=True, company_id = company.ticker)
+        article_set = Article.objects.filter(date = self.today, isFin=True, company_id = company.ticker)
         #try to find articles using the ticker
-        if not article_set:
+        if len(article_set) == 0:
             self.__populate_news__(company)
-            article_set = Article.objects.filter(date__in = [self.date, self.yesterday], isFin=True, company_id = company.ticker)
+            article_set = Article.objects.filter(date__in = [self.today, self.start_date], isFin=True, company_id = company.ticker)
         #if that  didnt work, find articles using the company name
-        if not article_set:
+        if len(article_set) == 0:
             self.__populate_news__(company, query_tkr = False)
-            article_set = Article.objects.filter(date__in = [self.date, self.yesterday], isFin=True, company_id = company.ticker)
+            article_set = Article.objects.filter(date__in = [self.today, self.start_date], isFin=True, company_id = company.ticker)
         return article_set
     def __populate_news__(self, company: Company, query_tkr=True):
         '''
@@ -45,7 +64,7 @@ class NewsApiWrapper:
         db_key = ''
         q_name = company.ticker if query_tkr else (company.common_name if company.common_name else company.name)
         query_set = NewsApiClient(api_key=db_key).get_everything(q= q_name,
-                                 from_param=self.yesterday,
+                                 from_param=self.start_date,
                                  language='en',sort_by='relevancy', page_size= 10, page=1)['articles']
         if len(query_set) < 3:
             return []

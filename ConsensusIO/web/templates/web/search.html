@@ -1,2 +1,9 @@
+{% if user_search.error_view %}
+<h1>{{user_search.error_msg}}</h1>
+    {% if user_search.error_submsg_link %}
+    <h4><br>{{user_search.error_submsg}} <a href="{{user_search.error_submsg_link}}">ticker</a></h4>
+    {% endif %}
+{% else %}
 <h1>search page</h1>
-<p>You searched: {{search_val}}</p>
+<p>You searched: {{user_search}}</p>
+{% endif %}
