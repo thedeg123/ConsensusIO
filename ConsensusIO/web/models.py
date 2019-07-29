@@ -32,3 +32,12 @@ class Article(models.Model):
         return str(self.title)
     class Meta :
         unique_together = ('company_id', 'title') #since django doesnt support weak entity relations, this is the next best thing
+    
+class Price(models.Model):
+    company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
+    date = models.DateField(default = timezone.now().date())
+    price = models.FloatField(default=0.0)
+    def __str__(self):
+        return ': $'.join([str(self.date),str(self.price)])
+    class Meta :
+        unique_together = ('company_id', 'date')
