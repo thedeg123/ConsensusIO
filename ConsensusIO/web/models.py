@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class Company(models.Model):
@@ -7,7 +8,7 @@ class Company(models.Model):
     name = models.CharField(unique=True, max_length = 255)
     logo_img = models.TextField(null=True, blank=True)
     common_name = models.CharField(null=True, blank=True, max_length = 100)
-    last_blank_day = models.DateField(null=True, blank=True)
+    last_checked = models.DateField(auto_now = True)
 
     p_neg = models.IntegerField(null=True, blank=True)
     p_ind = models.IntegerField(null=True, blank=True)
@@ -18,14 +19,14 @@ class Company(models.Model):
 class Article(models.Model):
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     title = models.CharField(max_length = 255)
-    date = models.DateField(default = timezone.now().date())
+    date = models.DateField(auto_now_add=True)
     
     subtitle = models.TextField(null=True, blank=True)
     source = models.TextField(null=True, blank=True)
     content = models.TextField(null=True, blank=True)
     url = models.TextField(null=True, blank=True)
 
-    sentiment = models.CharField(max_length=1, null=True, blank=True)
+    sentiment = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(2)])
     isFin = models.BooleanField(default=True)
     review = models.BooleanField(default=False)
 
@@ -36,7 +37,7 @@ class Article(models.Model):
     
 class Price(models.Model):
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
-    date = models.DateField(default = timezone.now().date())
+    date = models.DateField(auto_now_add=True)
     price = models.FloatField(default=0.0)
     change_pct = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     def __str__(self):
