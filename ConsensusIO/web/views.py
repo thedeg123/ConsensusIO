@@ -20,21 +20,20 @@ from web.ApiWrapper.PriceApiWrapper import get_price
 class IndexView(ListView):
     template_name = 'web/index.html'
     context_object_name = 'home_stocks'
+    today = timezone.now().date()
 
     def get_queryset(self):
         news_wrapper = NewsApiWrapper()
-        company_set = Company.objects.filter(pk__in=['TWTR', 'AAPL', 'MSFT', 'AMZN', 'FB', 'BRK.B', 'GOOGL', 'JPM', 'JNJ', 'BAC', 'PG', 'DIS'])
+        company_set = Company.objects.filter(pk__in=['BABA', 'AAPL', 'MSFT', 'AMZN', 'FB', 'BRK.B', 'GOOGL', 'JPM', 'JNJ', 'BAC', 'PG', 'DIS'])
         for company in company_set:
-            if not company.article_set.all():
-                news_wrapper.update_company(company)
+            news_wrapper.update_company(company)
         return company_set if type(company_set) is list else [company_set]
-
 
 class SearchView(ListView):
     template_name = 'web/search.html'
     model = Article
     context_object_name = 'user_search'
-    date = timezone.now().date()
+    today = timezone.now().date()
 
     def get_queryset(self):
         query = self.request.GET.get('search_bar')
@@ -50,21 +49,20 @@ class SearchView(ListView):
                 continue
         if not company:
             return {'error_view':True, 'error_msg' : ' '.join(["No company found with name:", query])}
-        _ , time_delta = NewsApiWrapper().update_company(company)
-        if not time_delta:
+        _, time_delta = NewsApiWrapper().update_company(company)
+        news_set = company.article_set.filter(date__in=[self.today, self.today - time_delta], isFin=True)
+        if not news_set:
             return {'error_view':True,
                     'error_msg' : ''.join(["Could not find any any news for company \"", company.name, "\" in past 30 days"]),
                     'error_submsg': 'Not the company you were looking for? Try searching its',
                     'error_submsg_link': 'https://www.marketwatch.com/tools/quotes/lookup.asp',
                     }
-        news_set = company.article_set.filter(date__in=[self.date, self.date - time_delta], isFin=True)
-
         return {'company':company,
                 'pos_set': news_set.filter(sentiment=2),
                 'mixed_set': news_set.filter(sentiment=1),
                 'neg_set': news_set.filter(sentiment=0),
                 'non_fin_set': company.article_set.filter(isFin=False),
-                'price': get_price(company, self.date)
+                'price': get_price(company, self.today)
                 }
 def acknowledgments(request):
     return render(request, 'web/acknowledgments.html', {})

@@ -1,6 +1,6 @@
 from django.db import models
-from django.utils import timezone
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils.timezone import now
 
 # Create your models here.
 class Company(models.Model):
@@ -8,7 +8,7 @@ class Company(models.Model):
     name = models.CharField(unique=True, max_length = 255)
     logo_img = models.TextField(null=True, blank=True)
     common_name = models.CharField(null=True, blank=True, max_length = 100)
-    last_checked = models.DateField(auto_now = True)
+    last_checked = models.DateField(null=True, blank=True)
 
     p_neg = models.IntegerField(null=True, blank=True)
     p_ind = models.IntegerField(null=True, blank=True)
@@ -19,7 +19,7 @@ class Company(models.Model):
 class Article(models.Model):
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     title = models.CharField(max_length = 255)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=now)
     
     subtitle = models.TextField(null=True, blank=True)
     source = models.TextField(null=True, blank=True)
@@ -37,7 +37,7 @@ class Article(models.Model):
     
 class Price(models.Model):
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=now)
     price = models.FloatField(default=0.0)
     change_pct = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     def __str__(self):
