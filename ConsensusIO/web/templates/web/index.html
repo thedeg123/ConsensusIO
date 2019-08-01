@@ -5,25 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Index page</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'web/index.css' %}">
 </head>
-<nav>
+<body>
+<nav id="nav-bar">
+    <div class="container-nav">
         <ul>
             <li><a href="{% url 'web:index' %}">LOGO</a></li>
             <li><a href="{% url 'web:about' %}">About</a></li>
             <li><a href="{% url 'web:acknowledgments' %}">Acknowledgments</a></li>
         </ul>
+    </div>
 </nav>
-<body>
+<div class="clr"></div>
+<section id = "search">
     <form autocomplete="off" action="{% url 'web:search' %}" method="get">
         {% csrf_token %}
-        <input type="text" name="search_bar" placeholder="search">
-        <input type="submit" name="search_button" value="Search">
+        <input type="text" name="search_bar" placeholder="find a company" id="search_bar">
     </form>
-    <section>
+</section>
+<h1>At a glance,</h1>
+<div class="container">
+    <ul>
         {% for stock in home_stocks.0 %}
-            <li>{{stock.name}}: {{ stock.p_neg }}%, {{ stock.p_ind }}%, {{ stock.p_pos }}% <img src="{{stock.logo_img}}" style="width:2%;height:2%;"></li>
+        <a href="/search/?search_bar={{stock.ticker}}" class="box">
+            <li class = "name"> <p>{{stock.name}} </p>
+            <img src="{{stock.logo_img}}">
+                <ul>
+                    <li>{{ stock.p_neg }}%</li> 
+                    <li>{{ stock.p_ind }}%</li>
+                    <li>{{ stock.p_pos }}%</li>
+                </ul>
+            </li>
+        </a>
         {% endfor %}
-    </section>
+    </ul>
+    <div class="clr"></div>
+</div>
+<footer id="main-footer">
+    <p>MIT License Copyright &copy; 2019 David Gold</p>
+</footer>
 </body>
-
 </html>

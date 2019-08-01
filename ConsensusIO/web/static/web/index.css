@@ -1,0 +1,142 @@
+*{
+    margin:0;
+    padding:0;
+}
+.clr {
+    clear:both;
+}
+.container{
+    width:90%;
+    margin:auto;
+}
+body {
+    background-color:rgb(254,254,254);
+    color: rgb(6,12,19);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    line-height: 1.6em;
+}
+#nav-bar {
+    padding: 1em;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    position:fixed;
+    background-color:rgb(254,254,254);
+    /*background-color:rgb(254,254,254);*/
+    top:0;
+    z-index: 10;
+    width:100%;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+}
+#nav-bar ul{
+    padding:0;
+    list-style: none;
+}
+#nav-bar li{
+    float: right;
+    padding-right: 2em;
+}
+#nav-bar a{
+    color: rgb(6,12,19);
+    text-decoration: none;
+}
+#nav-bar a:hover{
+    text-decoration: underline;
+}
+#nav-bar li:nth-child(1){
+    float: left;
+}
+#search{
+    padding: 10% 2.5% 10% 2.5%;
+    background: white url("images/city.gif") no-repeat center;
+    background-size: 100%;
+    text-align: center;
+    margin: 1%;
+    margin-top:6.7%;
+}
+#search input{
+    border-radius: 1em;
+    text-align: center;
+    width: 90%;
+    height: 5vw;
+    font-size: 4vw;
+}
+#search input:focus{
+    outline: none;
+}
+h1 {
+    display:block;
+    margin: 2.5% 0.25em;
+    margin-top:5%;
+    margin-bottom:5%;
+    font-weight: 500;
+    font-size: 5vw;
+}
+
+.box {
+    z-index: 0;
+    position: relative;
+    float:left;
+    background-color: rgb(250,250,250);
+    width: 25em;
+    height: 12em;
+    padding: 0.5em;  
+    border: 0.05em solid rgb(179,190,195);
+    margin: 0.5em;
+    box-sizing: border-box;
+    list-style: none;
+    box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.4), 0 8px 8px 0 rgba(0, 0, 0, 0.19);
+}
+.box:hover{
+    box-shadow: 1px 4px 4px 1px rgba(0, 0, 0, 0.6), 0 6px 6px 0 rgba(0, 0, 0, 0.19);
+    text-decoration: underline;
+}
+.box:active{
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.9);
+}
+.box img{
+    position: absolute;
+    left: 18em;
+    bottom: 5em;
+    width: 5em;
+}
+a{
+    text-decoration: none;
+    color: rgb(6,12,19);
+}
+.name{
+    font-weight: 500;
+    padding: 0.3em;
+}
+.name p{
+     font-size: 2em;
+     line-height: 1em;
+     padding-right: 3.5em;
+}
+.name li{
+    font-weight: bold;
+    position: absolute;
+    font-size: 2em;
+    display: inline;
+    bottom: 1em;
+}
+.name li:nth-child(1){
+    left: 0.5em;
+    color: rgb(226,95,63);
+}
+.name li:nth-child(2){
+    left: 3.5em;
+    color: rgb(221, 230, 65);
+}
+.name li:nth-child(3){
+    left: 7em;
+    color: rgb(97,202,156);
+}
+a:active{
+    color: rgb(0,0,0);
+}
+#main-footer{
+    margin-top: 4vw;
+    text-align: center;
+    font-size: 0.8vw;
+
+}
