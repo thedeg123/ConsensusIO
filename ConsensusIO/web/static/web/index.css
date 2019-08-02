@@ -12,7 +12,7 @@
 body {
     background-color:rgb(254,254,254);
     color: rgb(6,12,19);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Geneva, Tahoma, sans-serif;
     line-height: 1.6em;
 }
 #nav-bar {
@@ -46,22 +46,30 @@ body {
 }
 #search{
     padding: 10% 2.5% 10% 2.5%;
-    background: white url("images/city.gif") no-repeat center;
-    background-size: 100%;
+    background: white url("images/stock.png") no-repeat center;
+    background-size: 110%;
     text-align: center;
     margin: 1%;
     margin-top:6.7%;
+    border-radius: 3px;
+     transition: all 0.3s ease-out;
+}
+#search:hover{
+    transform: scale(0.995,0.995);
+    transition: all 0.3s ease-out;
 }
 #search input{
+    background-color: rgb(250,250,250);
     border-radius: 1em;
     text-align: center;
-    width: 90%;
+    width: 40%;
     height: 4vw;
     font-size: 3vw;
     transition: all 0.3s ease-out;
 }
 #search input:focus{
     outline: none;
+    width:90%;
     transform: scale(1.1,1.2);
     transition: all 0.2s ease-in-out;
 }
@@ -119,6 +127,7 @@ a{
      padding-right: 3.5em;
 }
 .name li{
+    font-family: sans-serif, Geneva, Tahoma;
     font-weight: bold;
     position: absolute;
     font-size: 2em;

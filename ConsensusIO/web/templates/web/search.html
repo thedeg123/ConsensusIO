@@ -1,9 +1,111 @@
-{% if user_search.error_view %}
-<h1>{{user_search.error_msg}}</h1>
-    {% if user_search.error_submsg_link %}
-    <h4><br>{{user_search.error_submsg}} <a href="{{user_search.error_submsg_link}}">ticker</a></h4>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ConsensusIO/{{user_search.company.name}}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'web/search.css' %}">
+</head>
+<body>
+    <nav id="nav-bar">
+        <div class="container-nav">
+            <ul>
+                <li><a href="{% url 'web:index' %}">LOGO</a></li>
+                <li><a href="{% url 'web:about' %}">About</a></li>
+                <li><a href="{% url 'web:acknowledgments' %}">Acknowledgments</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="clr"></div>
+    <section id="error">
+    {% if user_search.error_view %}
+            <h1>{{user_search.error_msg}}</h1>
+            {% if user_search.error_submsg_link %}
+                <h4><br>{{user_search.error_submsg}} <a href="{{user_search.error_submsg_link}}" target="_blank">ticker</a></h4>
+            {% endif %}
+    </section>
+    {% else %}
+    <section id="showcase">
+            <section id="search">
+                <form autocomplete="off" action="{% url 'web:search' %}" method="get">
+                    {% csrf_token %}
+                    <input type="text" name="search_bar" placeholder="find another company" id="search_bar">
+                </form>
+            </section>
+            <h1>{{user_search.company.name}}</h1>
+            <h2>{{user_search.price.price}}</h2>
+            <h2>{{user_search.price.change_pct}}</h2>
+            <img src="{{user_search.company.logo_img}}">
+            <p>Analyzed {{user_search.total_size}} financial articles over the past 2 days finding:</p>
+            <div class="percents">
+                <h2>{{user_search.company.p_neg}}% {{user_search.company.p_ind}}% {{user_search.company.p_pos}}%</h2>
+            </div>
+            <h2>Positive Indifferent Negative </h2>
+    </section>
+    <section id="news">
+        <ul>
+            <li> Positive
+                <ul>
+                {% for article in user_search.pos_set %}
+                    <li class="article">
+                    <a href="{{article.url}}" target="_blank" class="box">
+                        <h3 class="title">{{article.title}}</h3>
+                        <p class="source"> {{article.source}}</p>
+                        <p class="subtitle">{{article.subtitle}}</p>
+                        <p class="date">{{article.date}}</p>
+                    </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </li>
+            <li> Mixed
+                <ul>
+                    {% for article in user_search.mixed_set %}
+                    <li class="article">
+                        <a href="{{article.url}}" target="_blank" class="box">
+                            <h3 class="title">{{article.title}}</h3>
+                            <p class="source"> {{article.source}}</p>
+                            <p class="subtitle">{{article.subtitle}}</p>
+                            <p class="date">{{article.date}}</p>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li> Negative
+                <ul>
+                    {% for article in user_search.neg_set %}
+                    <li class="article">
+                        <a href="{{article.url}}" target="_blank" class="box">
+                            <h3 class="title">{{article.title}}</h3>
+                            <p class="source"> {{article.source}}</p>
+                            <p class="subtitle">{{article.subtitle}}</p>
+                            <p class="date">{{article.date}}</p>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li> Non financial
+                <ul>
+                    {% for article in user_search.non_fin_set %}
+                    <li class="article">
+                        <a href="{{article.url}}" target="_blank" class="box">
+                            <h3 class="title">{{article.title}}</h3>
+                            <p class="source"> {{article.source}}</p>
+                            <p class="subtitle">{{article.subtitle}}</p>
+                            <p class="date">{{article.date}}</p>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    </section>
     {% endif %}
-{% else %}
-<h1>search page</h1>
-<p>You searched: {{user_search}}</p>
-{% endif %}
+   
+</body>
+</html>
+
