@@ -27,26 +27,36 @@
             {% endif %}
     </section>
     {% else %}
+    <div id="content">
     <section id="showcase">
-            <section id="search">
+            <section class="search">
                 <form autocomplete="off" action="{% url 'web:search' %}" method="get">
                     {% csrf_token %}
                     <input type="text" name="search_bar" placeholder="find another company" id="search_bar">
                 </form>
             </section>
             <h1>{{user_search.company.name}}</h1>
-            <h2>{{user_search.price.price}}</h2>
-            <h2>{{user_search.price.change_pct}}</h2>
-            <img src="{{user_search.company.logo_img}}">
-            <p>Analyzed {{user_search.total_size}} financial articles over the past 2 days finding:</p>
-            <div class="percents">
-                <h2>{{user_search.company.p_neg}}% {{user_search.company.p_ind}}% {{user_search.company.p_pos}}%</h2>
+            <div class=showcase_content>
+                <img src="{{user_search.company.logo_img}}">
+                <div id="price">
+                    <h2>${{user_search.price.price}}</h2>
+                </div>
+                <div id="percent">
+                    <h2>{{user_search.price.change_pct}}%</h2>
+                </div>
             </div>
-            <h2>Positive Indifferent Negative </h2>
+            <p>Analyzed {{user_search.total_size}} financial articles over the past 2 days finding:</p>
+                <div id="consenus_vals">
+                    <ul>
+                        <li><div class="percents">{{user_search.company.p_pos}}%</div> Positive</li>
+                        <li><div class="percents">{{user_search.company.p_ind}}%</div> Indifferent</li>
+                        <li><div class="percents">{{user_search.company.p_neg}}%</div> Negative</li>
+                    </ul>
+                </div>
     </section>
     <section id="news">
         <ul>
-            <li> Positive
+            <li class="news_set"> Positive
                 <ul>
                 {% for article in user_search.pos_set %}
                     <li class="article">
@@ -60,7 +70,7 @@
                 {% endfor %}
                 </ul>
             </li>
-            <li> Mixed
+            <li class="news_set"></li> Mixed
                 <ul>
                     {% for article in user_search.mixed_set %}
                     <li class="article">
@@ -74,7 +84,7 @@
                     {% endfor %}
                 </ul>
             </li>
-            <li> Negative
+            <li class="news_set"> Negative
                 <ul>
                     {% for article in user_search.neg_set %}
                     <li class="article">
@@ -88,7 +98,7 @@
                     {% endfor %}
                 </ul>
             </li>
-            <li> Non financial
+            <li class="news_set"> Non financial
                 <ul>
                     {% for article in user_search.non_fin_set %}
                     <li class="article">
@@ -105,7 +115,10 @@
         </ul>
     </section>
     {% endif %}
-   
+   </div>
+    <footer id="main-footer">
+        <p>MIT License Copyright &copy; 2019 David Gold</p>
+</footer>
 </body>
 </html>
 

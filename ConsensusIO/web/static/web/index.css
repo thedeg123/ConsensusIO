@@ -46,16 +46,16 @@ body {
 }
 #search{
     padding: 10% 2.5% 10% 2.5%;
-    background: white url("images/stock.png") no-repeat center;
+    background: rgb(223, 208, 208) url("images/stock.png") no-repeat center;
     background-size: 110%;
     text-align: center;
     margin: 1%;
     margin-top:6.7%;
     border-radius: 3px;
-     transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
 }
 #search:hover{
-    transform: scale(0.995,0.995);
+    transform: scale(1.01,1.01);
     transition: all 0.3s ease-out;
 }
 #search input{
@@ -98,7 +98,7 @@ h1 {
 }
 .box:hover{
     box-shadow: 2px 2px 3px 4px rgba(0, 0, 0, 0.6);
-    transform: scale(0.99,0.99);
+    transform: scale(0.98,0.98);
     transition: opacity 0.2s ease-out;
     text-decoration: underline;
 }
