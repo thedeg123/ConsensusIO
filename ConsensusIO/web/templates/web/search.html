@@ -12,7 +12,7 @@
     <nav id="nav-bar">
         <div class="container-nav">
             <ul>
-                <li><a href="{% url 'web:index' %}">LOGO</a></li>
+                <li><a href="{% url 'web:index' %}"><img class="img" src="../../static/web/images/logo.png"></a></li>
                 <li><a href="{% url 'web:about' %}">About</a></li>
                 <li><a href="{% url 'web:acknowledgments' %}">Acknowledgments</a></li>
             </ul>
@@ -45,18 +45,16 @@
                     <h2>{{user_search.price.change_pct}}%</h2>
                 </div>
             </div>
-            <p>Analyzed {{user_search.total_size}} financial articles over the past 2 days finding:</p>
-                <div id="consenus_vals">
-                    <ul>
-                        <li><div class="percents">{{user_search.company.p_pos}}%</div> Positive</li>
-                        <li><div class="percents">{{user_search.company.p_ind}}%</div> Indifferent</li>
-                        <li><div class="percents">{{user_search.company.p_neg}}%</div> Negative</li>
-                    </ul>
-                </div>
+            <p>Analyzed {{user_search.total_size}} financial articles over the past 3 days finding:</p>
+                <ul id="consenus_vals">
+                    <li>{{user_search.company.p_pos}}%<div class="p_lables"> Positive</div></li>
+                    <li>{{user_search.company.p_ind}}%<div class="p_lables"> Indifferent</div></li>
+                    <li>{{user_search.company.p_neg}}%<div class="p_lables"> Negative</div></li>
+                </ul>
     </section>
     <section id="news">
         <ul>
-            <li class="news_set"> Positive
+            <li> <h1>Positive,</h1>
                 <ul>
                 {% for article in user_search.pos_set %}
                     <li class="article">
@@ -70,7 +68,7 @@
                 {% endfor %}
                 </ul>
             </li>
-            <li class="news_set"></li> Mixed
+            <li> <h1>Mixed,</h1>
                 <ul>
                     {% for article in user_search.mixed_set %}
                     <li class="article">
@@ -84,7 +82,7 @@
                     {% endfor %}
                 </ul>
             </li>
-            <li class="news_set"> Negative
+            <li> <h1>Negative,</h1>
                 <ul>
                     {% for article in user_search.neg_set %}
                     <li class="article">
@@ -98,7 +96,7 @@
                     {% endfor %}
                 </ul>
             </li>
-            <li class="news_set"> Non financial
+            <li> <h1>Non financial,</h1>
                 <ul>
                     {% for article in user_search.non_fin_set %}
                     <li class="article">

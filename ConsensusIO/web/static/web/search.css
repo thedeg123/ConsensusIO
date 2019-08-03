@@ -20,8 +20,20 @@ body {
     position:fixed;
     background-color:rgb(254,254,254);
     top:0;
+    z-index: 2;
     width:100%;
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+}
+.img {
+    position: fixed;
+    top:2.5%;
+    left:2.5%;
+    width: 8em;
+    transition: all 0.3s ease-out;
+}
+.img:hover{
+    transform: scale(1.02,1.02);
+    transition: all 0.3s ease-out;
 }
 #nav-bar ul{
     padding:0;
@@ -68,31 +80,21 @@ body {
     position: relative;
     text-align: center;
     font-size: 3vw;
-    margin: 1vw 1vw 2vw 1vw;
+    margin: 0vw 1vw 1vw 1vw;
     line-height:4.5vw;
 }
-    #consenus_vals{
-    color:blue;
-    text-align: right;
-    }
-.percents{
-    color:red;
-    display: inline;
-    text-align: left;
-}
-
 .showcase_content h2{
     text-align: right;
     padding-right: 10vw;
     font-family: sans-serif, Geneva, Tahoma;
-    font-size: 3vw;
+    font-size: 3em;
     line-height: 4vw;
 }
 #price {
     color:rgb(97,202,156);
 }
-#percent {
-    font-size: 1vw;
+#percent h2 {
+    font-size: 2.5vw;
     color:rgb(221, 230, 65);
 }
 #showcase ul{
@@ -101,20 +103,43 @@ body {
 }
 #showcase li{
     margin:1.5vw;
-    font-size: 2vw;
+    line-height: 0.7em;
 }
 .showcase_content img{
     float: right;
     margin: 0vw 2vw 0vw 4vw;
     width: 10vw;
 }
-
+#consenus_vals{
+    display: inline;
+}
+.p_lables{
+    display: inline;
+    font-weight: normal;
+    font-family: Geneva, Tahoma, sans-serif;
+    color: rgb(6,12,19);
+    font-size: 2.5vw;
+}
+#consenus_vals li{
+    font-size: 3vw;
+    font-weight: bold;
+    font-family: sans-serif, Geneva, Tahoma;
+}
+#consenus_vals li:nth-child(1){
+     color:rgb(97,202,156);
+}
+#consenus_vals li:nth-child(2){
+      color:rgb(221, 230, 65);
+}
+#consenus_vals li:nth-child(3){
+    color: rgb(216, 43, 27);
+}
 .search{
     position: relative;
     text-align: center;
     padding-bottom: 1em;
     border-radius: 3px;
-    margin-top:1vw;
+    margin-top:0.5vw;
     transition: all 0.3s ease-out;
 }
 .search input{
@@ -139,7 +164,7 @@ body {
     height:2.5vw;
     font-size: 2vw;
     margin:0.5em 0em 0.5em 0em;
-    width:95%;
+    width:92%;
     transform: scale(1.1,1.2);
     transition: all 0.2s ease-in-out;
 }
@@ -150,17 +175,60 @@ body {
     height: 100%;
     justify-content: flex-end;
 }
-.news_set{
+#news ul{
     list-style: none;
+}
+#news h1{
+    font-size: 4vw;
+    margin: 0.5em 0em 1em 0em;
+}
+#news li:nth-child(1){
+     color:rgb(97,202,156);
+}
+#news li:nth-child(2){
+      color:rgb(221, 230, 65);
+}
+#news li:nth-child(3){
+    color: rgb(216, 43, 27);
 }
 .article{
-    background-color: rgb(250,250,250);
     list-style: none;
-    margin:0.25em 1em;
+    margin: 1.5em 3em 1.5em 1em;
     padding:0.5em;
-    border: 1px solid black;
+    box-shadow: 3px 3px 6px 4px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease-in-out;
 }
-
+.article:hover{
+    box-shadow: 3px 3px 6px 5px rgba(0, 0, 0, 0.27);
+    transform: scale(1.03,1.03);
+    transition: opacity 0.2s ease-out;
+    z-index: 0;
+}
+.article:active{
+    box-shadow: 3px 3px 6px 6px rgba(0, 0, 0, 0.2);
+    transform: scale(1.04,1.04);
+    transition: opacity 0.5s ease-out;
+    z-index: 0;
+}
+a{
+    text-decoration:none;
+    color: rgb(6,12,19);
+}
+.title{
+    font-weight: bold;
+    font-size: 1.5vw;
+    text-align: center;
+}
+.source{
+     margin: 0.3vw 0vw 0.3vw 0vw;
+    font-size: 1.2vw;
+}
+.date{
+    text-align: right;
+}
+.subtitle{
+    margin: 0vw 0vw 0vw 1.5vw;
+}
 #main-footer{
     margin-top: 4vw;
     padding-left: 35%;

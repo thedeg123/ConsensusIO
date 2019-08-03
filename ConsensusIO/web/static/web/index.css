@@ -16,7 +16,7 @@ body {
     line-height: 1.6em;
 }
 #nav-bar {
-    padding: 1em;
+    padding: 1vw;
     padding-top: 2%;
     padding-bottom: 2%;
     position:fixed;
@@ -44,13 +44,24 @@ body {
 #nav-bar li:nth-child(1){
     float: left;
 }
+.img {
+    position: fixed;
+    top:2.5%;
+    left:2.5%;
+    width: 8em;
+    transition: all 0.3s ease-out;
+}
+.img:hover{
+    transform: scale(1.02,1.02);
+    transition: all 0.3s ease-out;
+}
 #search{
     padding: 10% 2.5% 10% 2.5%;
     background: rgb(223, 208, 208) url("images/stock.png") no-repeat center;
     background-size: 110%;
     text-align: center;
     margin: 1%;
-    margin-top:6.7%;
+    margin-top:6.7vw;
     border-radius: 3px;
     transition: all 0.3s ease-out;
 }
@@ -130,25 +141,25 @@ a{
     font-family: sans-serif, Geneva, Tahoma;
     font-weight: bold;
     position: absolute;
-    font-size: 2em;
+    font-size: 2.5em;
     display: inline;
     bottom: 1em;
 }
 .name li:nth-child(1){
-    left: 0.5em;
-    color: rgb(226,95,63);
+    color: rgb(216, 43, 27);
 }
 .name li:nth-child(2){
-    left: 3.5em;
     color: rgb(221, 230, 65);
+    left:3em;
 }
 .name li:nth-child(3){
-    left: 7em;
     color: rgb(97,202,156);
+    left:5.5em;
 }
 a:active{
     color: rgb(0,0,0);
 }
+
 #main-footer{
     margin-top: 4vw;
     text-align: center;
