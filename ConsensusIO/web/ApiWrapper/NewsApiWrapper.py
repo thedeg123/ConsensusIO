@@ -62,7 +62,7 @@ class NewsApiWrapper:
         '''
         populates the dbs with news
         '''
-        db_key = '8e500c992adf43d680f652f336311b61'
+        db_key = ''
         q_name = company.ticker if query_tkr else (company.common_name if company.common_name else company.name)
         query_set = NewsApiClient(api_key=db_key).get_everything(q= q_name,
                                  from_param=self.start_date,
