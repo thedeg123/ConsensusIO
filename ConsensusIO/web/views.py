@@ -7,6 +7,7 @@ from datetime import timedelta
 from django.db.models import Q
 from web.ApiWrapper.NewsApiWrapper import NewsApiWrapper
 from web.ApiWrapper.PriceApiWrapper import get_price
+from requests.exceptions import ConnectionError
 
 #def migratedbs():
 #     BASE = os.path.dirname(os.path.abspath(__file__))
@@ -48,21 +49,31 @@ class SearchView(ListView):
             except IndexError:
                 continue
         if not company:
-            return {'error_view':True, 'error_msg' : ' '.join(["No company found with name:", query])}
-        _, time_delta = NewsApiWrapper().update_company(company)
-        news_set = company.article_set.filter(date__in=[self.today, self.today - time_delta], isFin=True)
+            return {'error_view':True,
+                    'error_msg' : ' '.join(["No company found with name:", query]),
+                    'error_submsg': 'To find this company exactly, try searching its',
+                    'error_submsg_link': 'https://www.marketwatch.com/tools/quotes/lookup.asp',
+                   }
+        print(self.today)
+        time_delta = NewsApiWrapper().update_company(company)
+        news_set = company.article_set.filter(date__range=[self.today - time_delta, self.today], isFin=True).order_by('-date')
         if not news_set:
             return {'error_view':True,
                     'error_msg' : ''.join(["Could not find any any news for company \"", company.name, "\" in past 30 days"]),
                     'error_submsg': 'Not the company you were looking for? Try searching its',
                     'error_submsg_link': 'https://www.marketwatch.com/tools/quotes/lookup.asp',
                     }
+        try:
+            price = get_price(company, self.today)
+        except ConnectionError:
+            return {'error_view':True, 'error_msg' : "No internet connection :("}
         return {'company':company,
                 'pos_set': news_set.filter(sentiment=2),
                 'mixed_set': news_set.filter(sentiment=1),
                 'neg_set': news_set.filter(sentiment=0),
-                'non_fin_set': company.article_set.filter(isFin=False),
-                'price': get_price(company, self.today)
+                'non_fin_set': company.article_set.filter(date__range=[self.today - time_delta, self.today], isFin=False).order_by('-date'),
+                'price': price,
+                'total_size': len(news_set)
                 }
 def acknowledgments(request):
     return render(request, 'web/acknowledgments.html', {})

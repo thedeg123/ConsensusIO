@@ -9,7 +9,7 @@ from django.db import IntegrityError
 class NewsApiWrapper:
     def __init__(self):
         self.today = timezone.now().today()
-        self.start_date = (self.today - timedelta(days=1)).strftime('%Y-%m-%d')
+        self.start_date = (self.today - timedelta(days=2)).strftime('%Y-%m-%d')
         self.time_delta = None
     def update_company(self, company: Company):
         '''
@@ -17,22 +17,23 @@ class NewsApiWrapper:
         If no news was published in past month, returning none.
         '''
         if company.last_checked == self.today.date():
-            print("Last checked:", company.last_checked)
-            return None, timedelta(days=1)
+            return timedelta(days=2)
         article_set, time_delta = self.__get_avg_news_set__(company)
         if len(article_set)==0:
-            return None, time_delta
+            return time_delta
         company.p_neg,company.p_ind, company.p_pos = article_set
+        company.last_checked = self.today
         company.save()
-        return company, time_delta
+        return time_delta
 
     def __get_avg_news_set__(self, company: Company):
-        for time_change in [timedelta(days=1), timedelta(days=7), timedelta(days=14), timedelta(days=21), timedelta(days=27)]:
+        for time_change in [timedelta(days=2), timedelta(days=7), timedelta(days=14), timedelta(days=21), timedelta(days=27)]:
             self.time_delta = time_change
             self.start_date = (self.today - time_change).strftime('%Y-%m-%d')
             article_set = self.__get_avg_news_set_for_date__(company)
             if len(article_set)>0:
                 return (article_set, self.time_delta)
+        company.last_checked = self.today
         company.save()
         return ([], self.time_delta)
         
@@ -49,21 +50,19 @@ class NewsApiWrapper:
         Checks the database to see if articles from today exist, if not dbs is populated
         '''
         article_set = Article.objects.filter(date = self.today, isFin=True, company_id = company.ticker)
-        print('HERE')
         #try to find articles using the ticker
         if len(article_set) == 0:
             self.__populate_news__(company)
-            article_set = Article.objects.filter(date__in = [self.today, self.start_date], isFin=True, company_id = company.ticker)
+            article_set = Article.objects.filter(date__range = [self.start_date, self.today], isFin=True, company_id = company.ticker)
         #if that  didnt work, find articles using the company name
         if len(article_set) == 0:
             self.__populate_news__(company, query_tkr = False)
-            article_set = Article.objects.filter(date__in = [self.today, self.start_date], isFin=True, company_id = company.ticker)
-        return article_set
+        return Article.objects.filter(date__range = [self.start_date, self.today], isFin=True, company_id = company.ticker)
     def __populate_news__(self, company: Company, query_tkr=True):
         '''
         populates the dbs with news
         '''
-        db_key = ''
+        db_key = '8e500c992adf43d680f652f336311b61'
         q_name = company.ticker if query_tkr else (company.common_name if company.common_name else company.name)
         query_set = NewsApiClient(api_key=db_key).get_everything(q= q_name,
                                  from_param=self.start_date,
@@ -80,7 +79,7 @@ class NewsApiWrapper:
         sentiment_outcomes[fin_outcomes] = self.__get_sentiment__(query_list[fin_outcomes]) 
         for sentiment, is_fin, article in zip(sentiment_outcomes, fin_outcomes, query_set):
             try:
-                Article(company_id = company, title = article['title'], date=article['publishedAt'].split('T',1)[0], 
+                Article(company_id = company, title = article['title'], source=article['source']['name'], date=article['publishedAt'].split('T',1)[0], 
                         subtitle=article['description'], content=article['content'], url=article['url'], isFin = is_fin,
                         sentiment = int(sentiment)).save()
             except IntegrityError:
