@@ -19,13 +19,14 @@
         </div>
     </nav>
     <div class="clr"></div>
-    <section id="error">
+    <section class="error">
     {% if user_search.error_view %}
-            <h1>{{user_search.error_msg}}</h1>
+            <h4>{{user_search.error_msg}}</h4>
             {% if user_search.error_submsg_link %}
-                <h4><br>{{user_search.error_submsg}} <a href="{{user_search.error_submsg_link}}" target="_blank">ticker</a></h4>
+                <h5><br>{{user_search.error_submsg}} <a id="error_link" href="{{user_search.error_submsg_link}}" target="_blank">ticker</a></h4>
             {% endif %}
     </section>
+    <div class="clr"></div>
     {% else %}
     <div id="content">
     <section id="showcase">
