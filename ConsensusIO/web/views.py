@@ -1,10 +1,8 @@
-from django.shortcuts import render, get_object_or_404 #get list 404 is the same except raises error if len(list)==0
+from django.shortcuts import render
 from .models import Company, Article, Price
 from django.views.generic import ListView
-from django.http import HttpResponse
 from django.utils import timezone
 from datetime import timedelta
-from django.db.models import Q
 from web.ApiWrapper.NewsApiWrapper import NewsApiWrapper
 from web.ApiWrapper.PriceApiWrapper import get_price
 from requests.exceptions import ConnectionError
@@ -27,7 +25,7 @@ class IndexView(ListView):
         news_wrapper = NewsApiWrapper()
         company_set = Company.objects.filter(pk__in=['BABA', 'AAPL', 'MSFT', 'AMZN', 'FB', 'BRK.B', 'GOOGL', 'JPM', 'JNJ', 'BAC', 'PG', 'DIS'])
         for company in company_set:
-            news_wrapper.update_company(company)
+            news_wrapper.update_company(company, look_back=2, min_articles=10)
         return company_set if type(company_set) is list else [company_set]
 
 class SearchView(ListView):
@@ -38,42 +36,46 @@ class SearchView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('search_bar')
-        company = None
+        company = news_set = look_back_length = None
+        news_wrapper = NewsApiWrapper()
         for query_result in [Company.objects.filter(ticker=query),
                              Company.objects.filter(common_name__icontains = query),
                              Company.objects.filter(name__icontains = query)
                             ]:
-            try:
+            if len(query_result)>0:
                 company = query_result[0]
                 break
-            except IndexError:
-                continue
         if not company:
             return {'error_view':True,
                     'error_msg' : ' '.join(["No company found with name:", query]),
                     'error_submsg': 'To find this company exactly, try searching its',
                     'error_submsg_link': 'https://www.marketwatch.com/tools/quotes/lookup.asp',
                    }
-        print(self.today)
-        time_delta = NewsApiWrapper().update_company(company)
-        news_set = company.article_set.filter(date__range=[self.today - time_delta, self.today], isFin=True).order_by('-date')
-        if not news_set:
+        #querying the database for 
+        for look_back in range(2,31,7):
+            if news_wrapper.update_company(company, look_back=look_back, min_articles=10):
+                look_back_length = look_back
+                break
+        if not look_back_length:
             return {'error_view':True,
                     'error_msg' : ''.join(["Could not find any any news for company \"", company.name, "\" in past 30 days"]),
                     'error_submsg': 'Not the company you were looking for? Try searching its',
                     'error_submsg_link': 'https://www.marketwatch.com/tools/quotes/lookup.asp',
                     }
+        time = self.today - timedelta(days=look_back_length)
+        print(time)
+        news_set = company.article_set.filter(date__range=[self.today - timedelta(days=look_back_length), self.today]).order_by('-date')
         try:
             price = get_price(company, self.today)
         except ConnectionError:
             return {'error_view':True, 'error_msg' : "No internet connection :("}
         return {'company':company,
-                'pos_set': news_set.filter(sentiment=2),
-                'mixed_set': news_set.filter(sentiment=1),
-                'neg_set': news_set.filter(sentiment=0),
-                'non_fin_set': company.article_set.filter(date__range=[self.today - time_delta, self.today], isFin=False).order_by('-date'),
+                'pos_set': news_set.filter(isFin=True, sentiment=2),
+                'mixed_set': news_set.filter(isFin=True, sentiment=1),
+                'neg_set': news_set.filter(isFin=True, sentiment=0),
+                'non_fin_set': news_set.filter(isFin=False),
                 'price': price,
-                'total_size': len(news_set)
+                'total_size': len(news_set.filter(isFin=True))
                 }
 def acknowledgments(request):
     return render(request, 'web/acknowledgments.html', {})
