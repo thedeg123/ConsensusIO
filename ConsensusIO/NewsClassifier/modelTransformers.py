@@ -1,4 +1,5 @@
-from sklearn.pipeline import BaseEstimator, TransformerMixin, Pipeline
+from sklearn.pipeline import TransformerMixin, Pipeline
+from sklearn.base import BaseEstimator
 import numpy as np
 import urlextract
 from sklearn.feature_extraction.text import TfidfTransformer
