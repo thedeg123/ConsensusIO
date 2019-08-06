@@ -28,13 +28,13 @@ class AbstractModel:
             return self.predict(self.fit(X))
         
 class FinFilter(AbstractModel):
-    def __init__(self, model_path: str = './models/fin_not_fin_v2.model', precision_rate: float = 0.2):
+    def __init__(self, model_path: str = './models/fin_not_fin_v2.model', precision_rate: float = 0.1):
         '''
         Filters text to financial data. returning a array of true/false corrisponding to each element in the original array
         model_path: path to the model which does the heavy lifting (saved as binary file)
         precision_rate: our threshold for news as "financial"
             -- as user keywords for companies will be cross-referenced wiht an API in advance, 
-            -- this can be low, 0.4 worked best on test and validation sets
+            -- this can be low, 0.1 worked best on test and validation sets
         '''
         self.precision_rate = precision_rate
         BASE = os.path.dirname(os.path.abspath(__file__))

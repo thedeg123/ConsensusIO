@@ -18,7 +18,6 @@ class NewsApiWrapper:
         '''
         if company.last_checked == self.today:
             return True
-
         self.start_date = self.today - timedelta(days=look_back)
 
         _ , article_set = self.__get_news_set__(company, min_articles = min_articles)
@@ -55,7 +54,6 @@ class NewsApiWrapper:
             if not query_val:
                 continue
             article_set = self.__query_database__(company, query_value=query_val, set_size=min_articles)
-        print(article_set)
         return False, article_set
     def __query_database__(self, company: Company, query_value:str, set_size:int) -> QuerySet:
         '''
@@ -63,7 +61,7 @@ class NewsApiWrapper:
             returns 
                 -- the query set of the newly added articles that are financial
         '''
-        db_key = ''
+        db_key = '8e500c992adf43d680f652f336311b61'
         query_set = NewsApiClient(api_key=db_key).get_everything(
                                  q=query_value,
                                  from_param=self.start_date.strftime('%Y-%m-%d'),

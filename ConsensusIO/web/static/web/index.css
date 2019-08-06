@@ -46,9 +46,9 @@ body {
 }
 .img {
     position: fixed;
-    top:2.5%;
+    top:0%;
     left:2.5%;
-    width: 8em;
+    width: 9em;
     transition: all 0.3s ease-out;
 }
 .img:hover{
@@ -154,7 +154,7 @@ a{
 }
 .name li:nth-child(3){
     color: rgb(97,202,156);
-    left:5.5em;
+    left: 6em;
 }
 a:active{
     color: rgb(0,0,0);

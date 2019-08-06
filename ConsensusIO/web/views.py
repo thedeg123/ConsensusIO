@@ -56,15 +56,13 @@ class SearchView(ListView):
             if news_wrapper.update_company(company, look_back=look_back, min_articles=10):
                 look_back_length = look_back
                 break
-        if not look_back_length:
-            return {'error_view':True,
-                    'error_msg' : ''.join(["Could not find any any news for company \"", company.name, "\" in past 30 days"]),
-                    'error_submsg': 'Not the company you were looking for? Try searching its',
-                    'error_submsg_link': 'https://www.marketwatch.com/tools/quotes/lookup.asp',
-                    }
-        time = self.today - timedelta(days=look_back_length)
-        print(time)
         news_set = company.article_set.filter(date__range=[self.today - timedelta(days=look_back_length), self.today]).order_by('-date')
+        if len(news_set) ==0:
+            return {'error_view':True,
+                        'error_msg' : ''.join(["Could not find any any news for company \"", company.name, "\" in past 30 days"]),
+                        'error_submsg': 'Not the company you were looking for? Try searching its',
+                        'error_submsg_link': 'https://www.marketwatch.com/tools/quotes/lookup.asp',
+                        }
         try:
             price = get_price(company, self.today)
         except ConnectionError:
