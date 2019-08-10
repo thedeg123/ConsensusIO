@@ -3,15 +3,31 @@ import os
 import numpy as np
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+from pickle import Unpickler
+class CustomUnpickler(Unpickler):
+    def find_class(self, module, name):
+        if name == 'Cleaner':
+            from .modelTransformers import Cleaner
+            return Cleaner
+        if name == 'CountVectorizerWithStemming':
+            from .modelTransformers import CountVectorizerWithStemming
+            return CountVectorizerWithStemming
+        if name == 'SetBias':
+            from .modelTransformers import SetBias
+            return SetBias
+        if name == 'RemoveNan':
+            from .modelTransformers import RemoveNan
+            return RemoveNan
+        return super().find_class(module, name)
+
 class AbstractModel:
         '''
         Classifies financial news as either positive, negative, or indifferent/mixed
         '''
         def __init__(self, model_path=None):
-            from pickle import load as loadP
             import sys
             with open(model_path, 'rb') as f:
-                raw_file = loadP(f)
+                raw_file = CustomUnpickler(f).load()
             try:
                 self.model, self.transformer = raw_file['model'], raw_file['transformer']
             except KeyError:

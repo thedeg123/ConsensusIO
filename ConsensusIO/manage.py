@@ -2,7 +2,6 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from NewsClassifier.modelTransformers import Cleaner, CountVectorizerWithStemming, SetBias, RemoveNan
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ConsensusIO.settings')
