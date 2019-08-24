@@ -44,7 +44,7 @@ class AbstractModel:
             return self.predict(self.fit(X))
         
 class FinFilter(AbstractModel):
-    def __init__(self, model_path: str = './models/fin_not_fin_v2.model', precision_rate: float = 0.1):
+    def __init__(self, model_path: str = './models/fin_not_fin_v3.model', precision_rate: float = 0.1):
         '''
         Filters text to financial data. returning a array of true/false corrisponding to each element in the original array
         model_path: path to the model which does the heavy lifting (saved as binary file)
@@ -62,7 +62,7 @@ class FinFilter(AbstractModel):
         return (self.model.predict_proba(X)[:, 1] > self.precision_rate)
 
 class Classifier(AbstractModel):
-    def __init__(self, model_path: str = './models/news_sentiment.model'):
+    def __init__(self, model_path: str = './models/news_sentiment_v2.model'):
         '''
         predicts if a financial news article is positive, negative, or indiferent/mixed returning a array of true/false 
         corrisponding to each element in the original array
