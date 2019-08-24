@@ -66,7 +66,7 @@ class NewsApiWrapper:
                                  q=query_value,
                                  from_param=self.start_date.strftime('%Y-%m-%d'),
                                  language='en',
-                                 sort_by='relevancy',
+                                 sort_by='popularity',
                                  page_size=set_size,
                                  page=1
                                  )['articles']
