@@ -21,7 +21,7 @@
 </nav>
 <div class="clr"></div>
 <section id = "search">
-    <form autocomplete="off" action="{% url 'web:search' %}" method="get">
+    <form autocomplete="off" action="{% url 'web:search' %}" method="GET">
         {% csrf_token %}
         <input type="text" name="search_bar" placeholder="find a company" id="search_bar">
     </form>

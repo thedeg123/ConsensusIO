@@ -32,7 +32,7 @@
     <div id="content">
     <section id="showcase">
             <section class="search">
-                <form autocomplete="off" action="{% url 'web:search' %}" method="get">
+                <form autocomplete="off" action="{% url 'web:search' %}" method="GET">
                     {% csrf_token %}
                     <input type="text" name="search_bar" placeholder="find another company" id="search_bar">
                 </form>
@@ -56,62 +56,34 @@
     </section>
     <section id="news">
         <ul>
-            <li> <h1>Positive,</h1>
+            {% for label_form_article in user_search.form_articles %}
+            <li> <h1>{{label_form_article.0}},</h1>
                 <ul>
-                {% for article in user_search.pos_set %}
+                {% for form_article in label_form_article.1 %}
                     <li class="article">
-                    <a href="{{article.url}}" target="_blank" class="box">
-                        <h3 class="title">{{article.title}}</h3>
-                        <p class="source"> {{article.source}}</p>
-                        <p class="subtitle">{{article.subtitle}}</p>
-                        <p class="date">{{article.date}}</p>
-                    </a>
+                        <a href="{{form_article.1.url}}" target="_blank" class="box">
+                            <h3 class="title">{{form_article.1.title}}</h3>
+                            <p class="source"> {{form_article.1.source}}</p>
+                            <p class="subtitle">{{form_article.1.subtitle}}</p>
+                            <p class="date">{{form_article.1.date}}</p>
+                        </a>
                     </li>
+                    <div id="open_button">
+                    <button onclick="openForm('{{form_article.0.form_id.value|escapejs}}'); ">Report an Error</button>
+                    </div>
+                    <div class="myForm" id="{{form_article.0.form_id.value}}">
+                        <form class="form-container" method="post">
+                            {% csrf_token %}
+                            {{ form_article.0 }}
+                            <input class="button" type="submit" onclick="submitForm('{{form_article.0.form_id.value|escapejs}}'); "
+                                value="Submit">
+                        </form>
+                        <button onclick="closeForm('{{form_article.0.form_id.value|escapejs}}'); ">Cancel</button>
+                    </div>
                 {% endfor %}
                 </ul>
             </li>
-            <li> <h1>Mixed,</h1>
-                <ul>
-                    {% for article in user_search.mixed_set %}
-                    <li class="article">
-                        <a href="{{article.url}}" target="_blank" class="box">
-                            <h3 class="title">{{article.title}}</h3>
-                            <p class="source"> {{article.source}}</p>
-                            <p class="subtitle">{{article.subtitle}}</p>
-                            <p class="date">{{article.date}}</p>
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </li>
-            <li> <h1>Negative,</h1>
-                <ul>
-                    {% for article in user_search.neg_set %}
-                    <li class="article">
-                        <a href="{{article.url}}" target="_blank" class="box">
-                            <h3 class="title">{{article.title}}</h3>
-                            <p class="source"> {{article.source}}</p>
-                            <p class="subtitle">{{article.subtitle}}</p>
-                            <p class="date">{{article.date}}</p>
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </li>
-            <li> <h1>Non financial,</h1>
-                <ul>
-                    {% for article in user_search.non_fin_set %}
-                    <li class="article">
-                        <a href="{{article.url}}" target="_blank" class="box">
-                            <h3 class="title">{{article.title}}</h3>
-                            <p class="source"> {{article.source}}</p>
-                            <p class="subtitle">{{article.subtitle}}</p>
-                            <p class="date">{{article.date}}</p>
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </li>
+            {% endfor %}
         </ul>
     </section>
     {% endif %}
@@ -119,6 +91,7 @@
     <footer id="main-footer">
         <p>MIT License Copyright &copy; 2019 David Gold</p>
 </footer>
+<script src="{% static 'web/search.js' %}"></script>
 </body>
 </html>
 

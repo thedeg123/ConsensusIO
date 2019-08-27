@@ -16,10 +16,14 @@ class NewsApiWrapper:
             returns:
                 - if it was able to populate the database with at least min_articles : bool
         '''
-        if company.last_checked == self.today:
-            return True
         self.start_date = self.today - timedelta(days=look_back)
-
+        if company.last_checked == self.today:
+            #if we already checked this company, we recalculate the percentages of pos neg indifferent.
+            #this accounts for a user reporting and article and having to rework the percentages
+            article_set = company.article_set.filter(date__range = [self.start_date, self.today], isFin=True)
+            company.p_neg,company.p_ind, company.p_pos = self.__get_avg_news_set__(article_set)
+            company.save()
+            return True
         _ , article_set = self.__get_news_set__(company, min_articles = min_articles)
         company.last_checked = self.today
         company.p_neg,company.p_ind, company.p_pos = self.__get_avg_news_set__(article_set)
@@ -66,7 +70,7 @@ class NewsApiWrapper:
                                  q=query_value,
                                  from_param=self.start_date.strftime('%Y-%m-%d'),
                                  language='en',
-                                 sort_by='popularity',
+                                 sort_by='relevancy',
                                  page_size=set_size,
                                  page=1
                                  )['articles']
@@ -93,7 +97,7 @@ class NewsApiWrapper:
         '''
         if len(article_set) ==0:
             return []
-        return np.array(ClassifierModels.FinFilter().fit_predict(article_set))
+        return np.array(ClassifierModels.FinFilter().transform_predict(article_set))
 
     def __get_sentiment__(self, article_set: np.ndarray) -> np.ndarray:
         '''
@@ -101,4 +105,4 @@ class NewsApiWrapper:
         '''
         if len(article_set) ==0:
             return []
-        return  ClassifierModels.Classifier().fit_predict(article_set)
+        return  ClassifierModels.Classifier().transform_predict(article_set)

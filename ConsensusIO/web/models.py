@@ -28,8 +28,10 @@ class Article(models.Model):
 
     sentiment = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(2)])
     isFin = models.BooleanField(default=True)
-    review = models.BooleanField(default=False)
-
+    review = models.IntegerField(null=True, blank=True) # 0:isFin=False
+                                                        # 1:sentiment=neg
+                                                        # 2:sentimet=ind
+                                                        # 3:sentimet=pos
     def __str__(self):
         return str(self.title)
     class Meta :

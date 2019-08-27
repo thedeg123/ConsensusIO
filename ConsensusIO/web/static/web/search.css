@@ -24,6 +24,7 @@
     text-decoration: underline;
 
 }
+
 body {
     background-color:rgb(254,254,254);
     color: rgb(6,12,19);
@@ -60,6 +61,22 @@ body {
 #nav-bar li:nth-child(1){
     float: left;
 }
+/* The popup form - hidden by default */
+.myForm {
+  display: none;
+  position: fixed;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  border: 3px solid #555;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+  z-index: 9;
+}
+#open_button{
+    color:red;
+}
 .img {
     position: fixed;
     top:0%;
@@ -73,7 +90,6 @@ body {
 }
 #showcase{
     background-color: rgb(250, 250, 250);
-    margin: 20vh 18vw;
     display: block;
     position: fixed;
     z-index:1;
@@ -188,11 +204,11 @@ body {
 }
 #news {
     background-color: rgb(250,250,250);
-    padding-left:36%;
+    padding-left:35%;
     padding-top: 6.7%;
     display: flex;
     height: 100%;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 #news ul{
     list-style: none;
