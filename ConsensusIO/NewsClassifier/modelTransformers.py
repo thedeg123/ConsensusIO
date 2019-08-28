@@ -1,13 +1,10 @@
-from sklearn.pipeline import TransformerMixin, Pipeline
-from sklearn.base import BaseEstimator
-import numpy as np
-import urlextract
-from sklearn.feature_extraction.text import TfidfTransformer
-import re
 from sklearn.feature_extraction.text import CountVectorizer
-from nltk.stem import WordNetLemmatizer
-from scipy.sparse import csr_matrix
-import pickle
+from nltk.stem import *
+from sklearn.pipeline import TransformerMixin, Pipeline
+from sklearn.base import  BaseEstimator
+import urlextract
+import re
+import numpy as np
 class Cleaner(BaseEstimator, TransformerMixin):
     def __init__(self, include_subj=True, replace_html=True, remove_punctuation=True, replace_urls=True, replace_numbers=True):
         self.include_subj = include_subj; self.replace_html = replace_html
@@ -21,11 +18,8 @@ class Cleaner(BaseEstimator, TransformerMixin):
     def transform(self, X, y=None):
         X_transformed = []
         for article in X:
-            article = article[article!=None] #remove any None values
-            try:
-                text = " ".join(article) if self.include_subj else " ".join(article[1:])
-            except IndexError:
-                text = " ".join(article)
+            article = [a for a in article if isinstance(a,str)]
+            text = " ".join(article) if self.include_subj else " ".join(article[1:])
             if self.replace_html:
                 text = self.__html_to_plain_text__(text)
             if self.replace_urls:
@@ -41,21 +35,19 @@ class Cleaner(BaseEstimator, TransformerMixin):
                 text = re.sub(r'\W+', ' ', text, flags=re.M)
             X_transformed.append(text)
         return X_transformed
-
 class RemoveNan(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
         return self
     def transform(self, X, y=None):
         return np.nan_to_num(X)
-
+from scipy.sparse import csr_matrix
 class CountVectorizerWithStemming(CountVectorizer):
     def build_analyzer(self):
-        lemm = WordNetLemmatizer()
+        stemmer = PorterStemmer()
         analyzer = super(CountVectorizerWithStemming, self).build_analyzer()
-        return lambda doc: (lemm.lemmatize(w) for w in analyzer(doc))
-
+        return lambda doc: (stemmer.stem(w) for w in analyzer(doc))
 class SetBias(BaseEstimator, TransformerMixin):
-    def __init__(self, bias_strength:float, bias_list_path:str = '../dependencies/word_list.sav',):
+    def __init__(self, bias_strength:float, bias_list_path:str = '../dependencies/word_list.sav'):
         with open(bias_list_path, 'rb') as f:
             self.bias_list = pickle.load(f)
         self.bias_strength = bias_strength
@@ -65,4 +57,9 @@ class SetBias(BaseEstimator, TransformerMixin):
         if type(X) is csr_matrix:
             X = X.toarray()
         return csr_matrix(np.add(X, self.bias_list*self.bias_strength, where=X!=0))
-
+class DummySetBias(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+    def transform(self, X, y=None):
+        return X
+    
