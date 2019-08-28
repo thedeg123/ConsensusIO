@@ -1,0 +1,4 @@
+#!/bin/bash
+cd ConsensusIO;
+python manage.py automated;
+cd ..;

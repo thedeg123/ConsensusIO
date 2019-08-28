@@ -40,7 +40,7 @@ class Command(BaseCommand):
                             str(len(update_sentiment_set))+" datapoints at: "+str(timezone.now()))
             update_set.update(review=None)
         else:
-            logging.warning("No updates to model at "+str(timezone.now()))
+            logging.warning("No updates to models at "+str(timezone.now()))
         
     def load_homescreen(self):
         return
@@ -50,7 +50,8 @@ class Command(BaseCommand):
         '''
         one_month_ago = timezone.now().date() - timedelta(days=31)
         delete_set = Article.objects.filter(date__lt = one_month_ago)
-        if not len(delete_set):
+        if not delete_set:
+            logging.warning("no articles to delete at: "+str(timezone.now()))
             return
         logging.warning("deleted "+str(len(delete_set))+" articles at: "+str(timezone.now()))
         delete_set.delete()
