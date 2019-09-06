@@ -52,7 +52,7 @@ class NewsApiWrapper:
                 - the set of articles: queryset
         '''
         article_set = []
-        for query_val in [company.ticker, company.common_name, company.name]:
+        for query_val in [company.common_name, company.name, company.ticker]:
             if len(article_set) > min_articles:
                 return True, article_set
             if not query_val:

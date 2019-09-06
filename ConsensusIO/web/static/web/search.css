@@ -354,3 +354,49 @@ a{
     font-size: 0.8vw;
 
 }
+@media (max-width:800px){
+    #showcase h1{
+        font-size: 200%;
+        line-height: 1em;
+    }
+    #showcase p{
+    font-size: 4vw;
+    margin: 2vh 0vw 2vh 0vw;
+}
+    #showcase li{
+    margin:1vh 1vw;
+    line-height: 3vh;
+}
+    #consenus_vals li{
+    font-size: 6vw;   
+}   
+    .showcase_content h2{
+        font-size: 6vw;
+        line-height: 3vh;
+    }
+    #percent h2 {
+    font-size: 4vw;
+}
+    #news h1{
+    font-size: 10vw;
+}
+    .article h3{
+    font-size: 4vw;
+}
+    .error h4{
+    margin-top:20em;
+    font-size: 4vw;
+}
+        #main-footer{
+        font-size: 3vw;
+    }
+    .article p{
+        font-size: 3vw;
+    }
+    .open_button{
+        font-size: 2vw;
+    }
+    .form{
+        transform: scale(2,2);
+    }
+}

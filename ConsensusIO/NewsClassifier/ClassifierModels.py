@@ -55,10 +55,14 @@ class AbstractModel:
             '''
             updates model, partially fitting to new dataset, overrides old file
             '''
-            self.model.partial_fit(self.transform(X), y)
+            self.model.partial_fit(np.nan_to_num(self.transform(X).toarray()), y)
             with open(self.model_path, 'wb') as f:
                 dump({'model': self.model, 'transformer': self.transformer},f)
+
         def transform_predict(self, X, y=None):
+            '''
+            transforms then predicts an array, similar to sklearn's fit_predict
+            '''
             return self.predict(self.transform(X))
         
 class FinFilter(AbstractModel):
