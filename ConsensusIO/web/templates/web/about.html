@@ -28,15 +28,16 @@
 <div class="container">
     <h2>What it is,</h2>
     <p>
-    ConsensusIO is a finance-based news aggregation platform using natural language processing to classify news articles of
-    a given security into one of four discrete classes: positive, indifferent, negative, and not financial. When supplied
-    with a large batch of articles, ConsensusIO gives a pulse on markets as to the sentiment of a given company.
+    ConsensusIO is a finance-based news aggregation platform using natural language processing to classify news articles
+    about a given security into one of four discrete classes: positive, indifferent, negative, and not financial. When
+    supplied with a large batch of articles, ConsensusIO gives a pulse on markets regarding the sentiment of a given
+    company.
     </p>
     <h2>How it works,</h2>
     <p>Sentiment analysis is considered a natural language processing problem. At its core, natural language processing (NLP)
     boils down into two subproblems:
     <ol>
-    <li>Represent each article,<i>i</i>, in a given corpus <i>C</i> as a vector <i>v</i> using any manor of encoding techniques.</li>
+    <li>Represent each article,<i>i</i>, in a given corpus <i>C</i>, as a vector <i>v</i>, using any manner of encoding techniques.</li>
     <li>Train a predictive model on the processed vectors to predict some new unseen article.</li>
     </ol>
     ConsensusIO relies upon two supervised natural language processing models: <i>fin_not_fin</i> and <i>news_sentiment</i>. The platforms
@@ -49,7 +50,7 @@
     split used was 0.1.</p>
     <h3>news_sentiment</h3>
     <p>
-    <i>news_sentiment</i> classifies financial articles into one of three discrete categories: positive, indifferent, or negative.
+    The <i>news_sentiment</i> model classifies financial articles into one of three discrete categories: positive, indifferent, or negative.
     For production, a SGD model with tf-idf encoding and supervised weighting was used.
     </p>
     <img src="{% static 'web/images/news_sentiment_table.png' %}">
@@ -65,7 +66,7 @@
             <li><img class="math" src="{% static 'web/images/note_one.png' %}"></img></li>
             <li>Online learning in this case consists of reviewing articles to increase the size of <i>Sp</i> and <i>Sn</i> respectively.</li>
             <li>Due to the small size and high complexity of the training set, all models performed within 0.02 accuracy of one
-            another, hereby to preserve space, are aggregated as a mean of each score.</li>
+            another, to preserve space, are aggregated as a mean of each score.</li>
             <li>Supervised document weighting consists of considering those words known to be finance based (words in <i>Sp ∪ Sn</i>) more
             heavily as a predictive factor than other words.</li>
             <li>The SVM model was trained for high precision and a low recall while the Random Forest model was trained for low
@@ -87,10 +88,10 @@
         </ol>
     <h2>Design FAQ</h2>
     <h3><i>- Why use two models as opposed to one model to classify everything?</i></h3>
-        <p class="answer">Two models were used due to the prevalence of data for one problem but the scarcity of data for the other. In the case
+        <p class="answer">Two models were used due to the prevalence of data for one problem, and the scarcity of data for the other. In the case
         of fin_not_fin, one can easily find large amounts of labeled training data; one must simply find financial news for one
         group, and any other news for the other group. Meanwhile, the news_sentiment model relied upon the highly intensive and
-        laborious process of a hand labeling training data. Programmatic document creation was employed to lessen this task.
+        laborious process of a hand labeling a training data set. Programmatic document creation was employed to lessen this task.
         </p>
     <h3><i>- The BERT model worked the best, why not use that in production?</i></h3>
         <p class="answer">While the BERT model performs the best, the computation time to retrain the model and encode data is significantly
@@ -105,19 +106,19 @@
         the platform becomes! By the time you read this, the platform’s prediction is most likely better than 0.64.</p>
     <h3><i>- Why is it sometimes so slow to load pages but other times so fast?</i></h3>
         <p class="answer">
-        The two main slowdowns loading a page come from querying the two APIs and transforming the dataset for the ML models.
+        The two main delays in loading a page come from querying the two APIs and transforming the dataset for the ML models.
         Therefore, when a company is searched, the platform stores the gathered information and ML predictions in a SQL
-        database. Next time the company is queried, the program can simply fetch the company from the database rather than
+        database. Next time the company is queried the program can simply fetch the company from the database, rather than
         repeating the entire ML pipeline.
         </p>
     <h3><i>- How often are the models updated?</i></h3>
         <p class="answer">Models are automatically retrained at 11:50 PM (PST) every night.
         </p>
     <h3><i>- Why are the articles I see often unrelated to my search or not from today?</i></h3>
-        <p class="answer">ConsensusIO relies upon the free NewsAPI for its content. While powerful, this API is in no way finance-focused,
-        therefore much of the news received is either not financial or not important. Due to the limiting nature of the
-        free API, the platform only gathers news once per day per company. Ideally in the future, the platform will transition
-        to the (paid) stocknewsapi.
+        <p class="answer">ConsensusIO relies upon the free NewsAPI for its content. While powerful, this API is in no way finance-focused.
+        Therefore, much of the news received is either not financial or not important. Due to the limiting nature of
+        the free API, the platform only gathers news once per day per company. Ideally in the future, the platform will
+        transition to the (paid) stocknewsapi.
         </p>
     <h3><i>- Why can I see only so few articles at a time?</i></h3>
         <p class="answer">Due to the free nature of the NewsAPI, the platform is limited to 500 articles a day. Therefore to ensure some form of

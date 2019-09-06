@@ -356,7 +356,7 @@ a{
 }
 @media (max-width:800px){
     #showcase h1{
-        font-size: 200%;
+        font-size: 110%;
         line-height: 1em;
     }
     #showcase p{
@@ -374,6 +374,7 @@ a{
         font-size: 6vw;
         line-height: 3vh;
     }
+
     #percent h2 {
     font-size: 4vw;
 }
@@ -386,6 +387,11 @@ a{
     .error h4{
     margin-top:20em;
     font-size: 4vw;
+}
+    .showcase_content img{
+    text-align: center;
+    margin: 0 2vw 2vh 0;
+    width: 25vw;
 }
     .img{
         width: 6em;

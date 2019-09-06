@@ -63,7 +63,6 @@ body {
     text-align: center;
     margin: 1%;
     margin-top:6em;
-    border-radius: 3px;
     transition: all 0.3s ease-out;
 }
 #search:hover{
@@ -166,7 +165,7 @@ a:active{
 }
 @media (max-width:800px){
     .box {
-        width: 90%;
+        width: 95%;
         height: 14em;
     }
     h1{
@@ -181,12 +180,7 @@ a:active{
         top: 10%;
         width: 5em;
     }
-    #search{
-        transform: scale(1,1.3);
-    }
-    #search input:focus{
-        transform: scale(1,1.3);
-    }
+
     #main-footer{
         font-size: 3vw;
     }
