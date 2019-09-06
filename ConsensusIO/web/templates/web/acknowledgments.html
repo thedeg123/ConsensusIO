@@ -1,1 +1,48 @@
-<h1>acknowledgments page</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>About</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'web/plain.css' %}">
+    <link rel="icon" href="../../static/web/images/logo.png">
+</head>
+
+<body>
+    <nav id="nav-bar">
+        <div class="container-nav">
+            <ul>
+                <li><a href="{% url 'web:index' %}"><img class="img" src="../../static/web/images/text_logo.png"></a>
+                </li>
+                <li><a href="{% url 'web:about' %}">About</a></li>
+                <li><a href="{% url 'web:acknowledgments' %}">Acknowledgments</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="clr"></div>
+    <div id="top">
+        <h1>ConsensusIO</h1>
+        <h2><i>A big thanks, you made this possible.</i></h2>
+        <div class="container">
+        <ul>
+            <li> <a href="https://webhose.io/free-datasets/">webhose.io</a> for their wonderful free datasets.</li>
+            <li>The free <a target="_blank" href="https://newsapi.org/">NewsAPI</a>.</li>
+            <li>The free <a target="_blank" href="https://iexcloud.io/">IEX Finance API</a>.</li>
+            <li>The <a target="_blank" href="https://towardsdatascience.com/">towardsdatascience</a> community for their countless great articles on NLP.</li>
+            <li>The great support given by <a target="_blank" href=www.pythonanywhere.com">pythonanywhere</a>.</li>
+            <li><a target="_blank" href="https://www.marketwatch.com">Marketwatch</a> for allowing use of its ticker search tool.</li>
+            <li>Aurélien Géron for his wonderful textbook: <i>Hands-On Machine Learning with Scikit-Learn and TensorFlow</i></li>
+            <li>Professor Adam Eck for Proofreading the about page.</li>
+            <li>You! You've made the site better by reporting articles!</li>
+        </ul>
+        </div>
+    </div>
+    <footer id="main-footer">
+        <p>MIT License Copyright &copy; 2019 David Gold</p>
+    </footer>
+</body>
+
+</html>

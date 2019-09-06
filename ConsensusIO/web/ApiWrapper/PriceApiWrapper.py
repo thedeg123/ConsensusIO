@@ -7,9 +7,13 @@ def get_price(company, date):
     except IEXQueryError:
         return None
     except IndexError:
-        print(date)
         key = 'pk_160ccf5ccda840c080e88774c8ef5837'
-        query = iexStock(company.ticker, token=key).get_book()['quote']
-        print(date)
-        Price(company_id = company, date=date, price=query['latestPrice'], change_pct = query['changePercent']).save()
+        try:
+            query = iexStock(company.ticker, token=key).get_book()['quote']
+        except IEXQueryError:
+            return None
+        try:
+            Price(company_id = company, date=date, price=query['latestPrice'], change_pct = query['changePercent']*100).save()
+        except KeyError:
+            Price(company_id = company, date=date, price=query['latestPrice'], change_pct=0.0).save()
         return Price.objects.filter(company_id = company, date = date)[0]

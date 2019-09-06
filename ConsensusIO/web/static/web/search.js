@@ -9,8 +9,7 @@ function openForm(v) {
 }
 function submitForm(v) {
     document.getElementById(v).style.display = "none";
-    document.getElementById(v).style.backgroundColor = "grey";
-    alert("Thanks for submitting! Its been logged!");
+    alert("Thanks for the correction!\n The models will be tweaked to perform better in the future.");
 }
 function closeForm(v) {
     document.getElementById(v).style.display = "none";

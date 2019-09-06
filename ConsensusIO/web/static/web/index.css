@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
 *{
     margin:0;
     padding:0;
@@ -6,25 +7,25 @@
     clear:both;
 }
 .container{
-    width:90%;
+    width:95%;
     margin:auto;
 }
 body {
     background-color:rgb(254,254,254);
     color: rgb(6,12,19);
-    font-family: Geneva, Tahoma, sans-serif;
+    font-family: Lato, Tahoma, sans-serif;
     line-height: 1.6em;
 }
 #nav-bar {
-    padding: 1vw;
-    padding-top: 2%;
-    padding-bottom: 2%;
+    padding: 1vw 1vh;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
     position:fixed;
     background-color:rgb(254,254,254);
     top:0;
     z-index: 10;
     width:100%;
-    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
 }
 #nav-bar ul{
     padding:0;
@@ -46,11 +47,10 @@ body {
 }
 .img {
     position: absolute;
-    margin:0;
     top:0%;
-    left:1.5%;
+    left:2.5%;
+    width: 8em;
     transition: all 0.3s ease-out;
-    width: 12vw;
 }
 .img:hover{
     transform: scale(1.02,1.02);
@@ -62,7 +62,7 @@ body {
     background-size: 110%;
     text-align: center;
     margin: 1%;
-    margin-top: 12vh;
+    margin-top:6em;
     border-radius: 3px;
     transition: all 0.3s ease-out;
 }
@@ -87,9 +87,7 @@ body {
 }
 h1 {
     display:block;
-    margin: 2.5% 0.25em;
-    margin-top:5%;
-    margin-bottom:5%;
+    margin: 5% 0.25em;
     font-weight: 500;
     font-size: 5vw;
 }
@@ -99,10 +97,10 @@ h1 {
     position: relative;
     float:left;
     background-color: rgb(250,250,250);
-    width: 25em;
+    width: 26em;
     height: 12em;
     padding: 0.5em;  
-    margin: 0.5em;
+    margin: 0.75em;
     box-sizing: border-box;
     list-style: none;
     box-shadow: 3px 3px 6px 7px rgba(0, 0, 0, 0.4);
@@ -121,7 +119,7 @@ h1 {
 }
 .box img{
     position: absolute;
-    left: 18em;
+    left: 19em;
     bottom: 5em;
     width: 5em;
 }
@@ -139,7 +137,7 @@ a{
      padding-right: 3.5em;
 }
 .name li{
-    font-family: sans-serif, Geneva, Tahoma;
+    font-family: sans-serif, Lato, Tahoma;
     font-weight: bold;
     position: absolute;
     font-size: 2.5em;
@@ -164,6 +162,10 @@ a:active{
 #main-footer{
     margin-top: 4vw;
     text-align: center;
-    font-size: 0.8vw;
-
+    font-size: 0.8vw
+}
+@media (max-width:700px){
+    .box {
+        width: 90%;
+    }
 }

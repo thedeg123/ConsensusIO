@@ -25,11 +25,17 @@ class IndexView(ListView):
 
     def get_queryset(self):
         news_wrapper = NewsApiWrapper()
-        company_set = Company.objects.filter(pk__in=['BABA', 'AAPL', 'MSFT', 'AMZN', 'FB', 'BRK.B', 'GOOGL', 'JPM', \
-                                                     'JNJ', 'BAC', 'PG', 'DIS'])
+        company_set = Company.objects.filter(pk__in=['BABA', 'AAPL', 'MSFT', 'AMZN', 'FB', 'MS', 'GOOGL', 'JPM', 'BAC'])
+        common_search_set = Company.objects.filter(pk__in=['SPY', 'BUSINESS', 'FED'])
+        crypto_set = Company.objects.filter(pk__in=['BTCUSDT', 'ETHUSDT', 'XRPUSDT'])
         for company in company_set:
             news_wrapper.update_company(company, look_back=2, min_articles=3)
-        return company_set if type(company_set) is list else [company_set]
+        for common in common_search_set:
+            news_wrapper.update_company(common, look_back=2, min_articles=3)
+        company_set = company_set if type(company_set) is list else [company_set]
+        return {'company_set': company_set,
+                'common_set': common_search_set,
+                'crypto_set': crypto_set}
 
 class SearchView(ListView):
     template_name = 'web/search.html'

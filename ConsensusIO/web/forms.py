@@ -6,4 +6,4 @@ class UpdateForm(forms.Form):
              (1, 'Negative'),
              (2, 'Indifferent'),
              (3, 'Positive')]
-    choice = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
+    choice = forms.ChoiceField( label='Please correct this article:', choices=CHOICES, widget=forms.RadioSelect)

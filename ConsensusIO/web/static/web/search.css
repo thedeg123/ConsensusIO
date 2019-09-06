@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
 *{
     margin:0;
     padding:0;
@@ -28,20 +29,20 @@
 body {
     background-color:rgb(254,254,254);
     color: rgb(6,12,19);
-    font-family: Geneva, Tahoma, sans-serif;
+    font-family: Lato, Tahoma, sans-serif;
     line-height: 1.6em;
     position: relative;
 }
 #nav-bar {
-    padding: 1vw;
-    padding-top: 2%;
-    padding-bottom: 2%;
+    padding: 1vw 1vh;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
     position:fixed;
     background-color:rgb(254,254,254);
     top:0;
     z-index: 10;
     width:100%;
-    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
 }
 #nav-bar ul{
     padding:0;
@@ -61,27 +62,11 @@ body {
 #nav-bar li:nth-child(1){
     float: left;
 }
-/* The popup form - hidden by default */
-.myForm {
-  display: none;
-  position: fixed;
-  background-color: white;
-  top: 50%;
-  left: 50%;
-  border: 3px solid #555;
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%);
-  z-index: 9;
-}
-#open_button{
-    color:red;
-}
 .img {
-    position: fixed;
+    position: absolute;
     top:0%;
     left:2.5%;
-    width: 9em;
+    width: 8em;
     transition: all 0.3s ease-out;
 }
 .img:hover{
@@ -96,15 +81,15 @@ body {
     margin:1vh 1vw;
     width:30%;
     height:78vh;
-    margin-top:6.7%;
+    margin-top:6em;
     padding:4vh 1vw 4vh 1vw;
-    border: 1px solid black;
+    border: 2px solid  rgb(6,12,19);
     border-radius: 2vw 2vh;
 }
 #showcase p{
     text-align: center;
-    font-size: 3vh;
-    margin: 4vh 0vw 2vh 0vw;
+    font-size: 2vw;
+    margin: 4vh 0vw 3vh 0vw;
 }
 .showcase_content{
     position: relative;
@@ -113,15 +98,15 @@ body {
 #showcase h1{
     position: relative;
     text-align: center;
-    font-size: 6vh;
+    font-size: 3.5vw;
     font-weight: bold;
     margin: 0vh 1.5vw 1.5vh 1.5vw;
     line-height:7vh;
 }
 .showcase_content h2{
     text-align: right;
-    font-family: sans-serif, Geneva, Tahoma;
-    font-size: 7vh;
+    font-family: sans-serif, Lato, Tahoma;
+    font-size: 3.5vw;
     line-height: 8vh;
     padding-right: 15vw;
 }
@@ -129,7 +114,7 @@ body {
     color:rgb(97,202,156);
 }
 #percent h2 {
-    font-size: 5vh;
+    font-size: 3vw;
     color:rgb(221, 230, 65);
 }
 #showcase ul{
@@ -143,7 +128,7 @@ body {
 .showcase_content img{
     float: right;
     margin: 0vh 2vw 0vh 4vw;
-    width: 15vh;
+    width: 9vw;
 }
 #consenus_vals{
     display: inline;
@@ -151,16 +136,16 @@ body {
 .p_lables{
     display: inline;
     font-weight: normal;
-    font-family: Geneva, Tahoma, sans-serif;
+    font-family: Lato, Tahoma, sans-serif;
     color: rgb(6,12,19);
-    font-size: 4vh;
+    font-size: 2.5vw;
 }
 #consenus_vals li{
-    font-size: 6vh;
+    font-size: 3.5vw;
     font-weight: bold;
-    font-family: sans-serif, Geneva, Tahoma;
+    font-family: sans-serif, Lato, Tahoma;
 }
-#consenus_vals li:nth-child(1){
+#showcase li:nth-child(1){
      color:rgb(97,202,156);
 }
 #consenus_vals li:nth-child(2){
@@ -182,11 +167,11 @@ body {
     text-align: center;
     width: 20vw;
     height: 3vh;
-    font-size: 2.5vh;
+    font-size: 1.5vw;
     transition: all 0.3s ease-out;
 }
 .search input:hover{
-    font-size: 2.6vh;
+    font-size: 1.7vw;
     margin:0.1em 0em 0.1em 0em;
     width:20.5vw;
     height: 3.2vh;
@@ -196,7 +181,7 @@ body {
 .search input:focus{
     outline: none;
     height:4vh;
-    font-size: 3.5vh;
+    font-size: 2vw;
     margin:0.5em 0em 0.5em 0em;
     width:27vw;
     transform: scale(1.1,1.2);
@@ -205,10 +190,10 @@ body {
 #news {
     background-color: rgb(250,250,250);
     padding-left:35%;
-    padding-top: 6.7%;
+    padding-top: 6em;
     display: flex;
     height: 100%;
-    justify-content: space-between;
+    justify-content: right;
 }
 #news ul{
     list-style: none;
@@ -218,21 +203,25 @@ body {
     font-size: 4vw;
     margin: 0.5em 0em 1em 0em;
 }
-#news li:nth-child(1){
+#news li:nth-child(1) h1{
      color:rgb(97,202,156);
 }
-#news li:nth-child(2){
+#news li:nth-child(2) h1{
       color:rgb(221, 230, 65);
 }
-#news li:nth-child(3){
+#news li:nth-child(3) h1{
     color: rgb(216, 43, 27);
 }
 .article{
     list-style: none;
-    margin: 1.5em 3em 1.5em 1em;
+    margin: 3vh 2vw 0vh 1vw;
     padding:0.5em;
     box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.4);
     transition: all 0.2s ease-in-out;
+}
+.article h3{
+    margin: 1vh 0;
+    font-size: 1.5vw;
 }
 .article:hover{
     box-shadow: 3px 3px 6px 5px rgba(0, 0, 0, 0.27);
@@ -258,6 +247,7 @@ a{
 .source{
      margin: 0.3vw 0vw 0.3vw 0vw;
     font-size: 1.2vw;
+    font-weight: bold;
 }
 .date{
     text-align: right;
@@ -265,7 +255,98 @@ a{
 .subtitle{
     margin: 0vw 0vw 0vw 1.5vw;
 }
-
+/* The popup form - hidden by default */
+.form {
+  box-sizing: border-box;
+  display: none;
+  position: fixed;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  border: 1px solid  rgb(6,12,19);
+  width: 30vw;
+  padding:2vh 2vw;
+  color: rgb(6,12,19);
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+  z-index: 9;
+}
+.form-container{
+    font-size: 2vw;
+    padding: 1em;
+    display: inline;
+    padding:1vh 1vw;
+}
+.open_button{
+    outline: 0;
+    position: relative;
+    margin: 0em;
+    margin: 1vh 0vw 1vh 1vw;
+    cursor: pointer;
+    box-shadow: 3px 4px 5px 3px rgba(0, 0, 0, 0.4);
+    background-color:rgb(250,250,250);
+    border:none;
+    font-weight: bold;
+    font-size: 1vw;
+    padding:1vh 1vw;
+    color: rgb(6,12,19);
+    transition: all 0.2s ease-in-out;
+}
+.open_button:hover{
+    transform: scale(1.03,1.03);
+    transition: opacity 0.2s ease-in;
+    text-decoration: underline;
+}
+.open_button:active{
+    box-shadow: 3px 3px 7px 6px rgba(0, 0, 0, 0.2);
+    transform: scale(1.04,1.04);
+    transition: opacity 0.5s ease-out;
+    z-index: 0;
+}
+.button{
+    outline: 0;
+    position: relative;
+    cursor: pointer;
+    background-color:rgb(250,250,250);
+    border:1px solid rgb(6,12,19);
+    font-weight: bold;
+    font-size: 1vw;
+    padding:1vh 1vw;
+    color: rgb(6,12,19);
+}
+.button:hover{
+    text-decoration: underline;
+}
+.cancel_button{
+    outline: 0;
+    position: relative;
+    cursor: pointer;
+    background-color:rgb(250,250,250);
+    border:1px solid rgb(6,12,19);
+    font-weight: bold;
+    font-size: 1vw;
+    padding:1vh 1vw;
+    color: rgb(6,12,19);
+}
+.cancel_button:hover{
+    text-decoration: underline;
+}
+/* button sylying*/
+.form-container li{
+    font-size: 0.8em;
+    line-height: 1.5em;
+}
+.form-container li:nth-child(2){
+     color: rgb(216, 43, 27);
+}
+.form-container li:nth-child(3){
+      color:rgb(221, 230, 65);
+}
+.form-container li:nth-child(4){
+    color:rgb(97,202,156);
+    
+}
 #main-footer{
     margin-top: 4vw;
     padding-left: 35%;

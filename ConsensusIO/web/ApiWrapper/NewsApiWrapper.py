@@ -32,7 +32,7 @@ class NewsApiWrapper:
 
     def __get_avg_news_set__(self, article_set: QuerySet) -> np.ndarray:
         '''
-        finds the proportion of set that is each val 
+        finds the proportion of set that is each possible catagory 
             returns:
                 - an array thats [proportion negative, proportion indifferent, proportion positive] : np.array
         '''

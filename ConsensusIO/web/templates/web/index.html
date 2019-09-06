@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Finance-based machine-learning powered news aggregator for people in a hurry.">
     <title>ConsensusIO</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'web/index.css' %}">
@@ -23,18 +24,56 @@
 <section id = "search">
     <form autocomplete="off" action="{% url 'web:search' %}" method="GET">
         {% csrf_token %}
-        <input type="text" name="search_bar" placeholder="find a company" id="search_bar">
+        <input type="text" name="search_bar" placeholder="find an asset" id="search_bar">
     </form>
 </section>
 <h1>At a glance,</h1>
 <div class="container">
     <ul>
-        {% for stock in home_stocks.0 %}
+        {% for stock in home_stocks.company_set.0%}
         <a href="/search/?search_bar={{stock.ticker}}" class="box">
             <li class = "name"> <p>{{stock.name}} </p>
             <img src="{{stock.logo_img}}">
                 <ul>
                     <li>{{ stock.p_neg }}%</li> 
+                    <li>{{ stock.p_ind }}%</li>
+                    <li>{{ stock.p_pos }}%</li>
+                </ul>
+            </li>
+        </a>
+        {% endfor %}
+    </ul>
+    <div class="clr"></div>
+</div>
+<h1>Popular searches,</h1>
+<div class="container">
+    <ul>
+        {% for stock in home_stocks.common_set%}
+        <a href="/search/?search_bar={{stock.ticker}}" class="box">
+            <li class="name">
+                <p>{{stock.name}} </p>
+                <img src="{{stock.logo_img}}">
+                <ul>
+                    <li>{{ stock.p_neg }}%</li>
+                    <li>{{ stock.p_ind }}%</li>
+                    <li>{{ stock.p_pos }}%</li>
+                </ul>
+            </li>
+        </a>
+        {% endfor %}
+    </ul>
+    <div class="clr"></div>
+</div>
+<h1>Cryptos,</h1>
+<div class="container">
+    <ul>
+        {% for stock in home_stocks.crypto_set%}
+        <a href="/search/?search_bar={{stock.ticker}}" class="box">
+            <li class="name">
+                <p>{{stock.name}} </p>
+                <img src="{{stock.logo_img}}">
+                <ul>
+                    <li>{{ stock.p_neg }}%</li>
                     <li>{{ stock.p_ind }}%</li>
                     <li>{{ stock.p_pos }}%</li>
                 </ul>

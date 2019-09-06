@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ConsensusIO/{{user_search.company.name}}</title>
+    <title>IO on {{user_search.company.name}}</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'web/search.css' %}">
     <link rel="icon" href="../../static/web/images/logo.png">
@@ -68,17 +68,15 @@
                             <p class="date">{{form_article.1.date}}</p>
                         </a>
                     </li>
-                    <div id="open_button">
-                    <button onclick="openForm('{{form_article.0.form_id.value|escapejs}}'); ">Report an Error</button>
-                    </div>
-                    <div class="myForm" id="{{form_article.0.form_id.value}}">
+                    <button class="open_button" onclick="openForm('{{form_article.0.form_id.value|escapejs}}'); ">Correct this Post</button>
+                    <div class="form" id="{{form_article.0.form_id.value}}">
                         <form class="form-container" method="post">
                             {% csrf_token %}
                             {{ form_article.0 }}
                             <input class="button" type="submit" onclick="submitForm('{{form_article.0.form_id.value|escapejs}}'); "
                                 value="Submit">
                         </form>
-                        <button onclick="closeForm('{{form_article.0.form_id.value|escapejs}}'); ">Cancel</button>
+                        <button class="cancel_button" onclick="closeForm('{{form_article.0.form_id.value|escapejs}}'); ">Cancel</button>
                     </div>
                 {% endfor %}
                 </ul>
