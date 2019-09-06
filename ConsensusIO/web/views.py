@@ -29,9 +29,9 @@ class IndexView(ListView):
         common_search_set = Company.objects.filter(pk__in=['SPY', 'BUSINESS', 'FED'])
         crypto_set = Company.objects.filter(pk__in=['BTCUSDT', 'ETHUSDT', 'XRPUSDT'])
         for company in company_set:
-            news_wrapper.update_company(company, look_back=2, min_articles=3)
+            news_wrapper.update_company(company, look_back=2, min_articles=10)
         for common in common_search_set:
-            news_wrapper.update_company(common, look_back=2, min_articles=3)
+            news_wrapper.update_company(common, look_back=2, min_articles=10)
         company_set = company_set if type(company_set) is list else [company_set]
         return {'company_set': company_set,
                 'common_set': common_search_set,
@@ -102,7 +102,7 @@ class SearchView(ListView):
     def fetch_sentiment_set(self, company):
         news_wrapper = NewsApiWrapper()
         for look_back in range(2,31,7):
-            if news_wrapper.update_company(company, look_back=look_back, min_articles=3):
+            if news_wrapper.update_company(company, look_back=look_back, min_articles=10):
                 look_back_length = look_back
                 break
         news_set = company.article_set.filter(date__range=[self.today - timedelta(days=look_back_length), self.today]).order_by('-date')
