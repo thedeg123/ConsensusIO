@@ -387,7 +387,10 @@ a{
     margin-top:20em;
     font-size: 4vw;
 }
-        #main-footer{
+    .img{
+        width: 6em;
+    }
+    #main-footer{
         font-size: 3vw;
     }
     .article p{
