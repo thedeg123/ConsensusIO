@@ -112,3 +112,11 @@ li{
     font-size: 0.8vw;
 
 }
+@media (max-width:800px){
+    .img{
+        width: 6em;
+    }
+    #main-footer{
+        font-size: 3vw;
+    }
+}
