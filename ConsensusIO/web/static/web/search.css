@@ -355,6 +355,12 @@ a{
 
 }
 @media (max-width:800px){
+    #showcase{
+        margin-top:5em;
+    }
+    #news{
+        padding-top: 5em;
+    }
     #showcase h1{
         font-size: 110%;
         line-height: 1em;
@@ -362,14 +368,14 @@ a{
     #showcase p{
     font-size: 4vw;
     margin: 2vh 0vw 2vh 0vw;
-}
+    }
     #showcase li{
     margin:1vh 1vw;
     line-height: 3vh;
-}
+    }
     #consenus_vals li{
     font-size: 6vw;   
-}   
+    }   
     .showcase_content h2{
         font-size: 6vw;
         line-height: 3vh;
@@ -377,22 +383,22 @@ a{
 
     #percent h2 {
     font-size: 4vw;
-}
+    }
     #news h1{
     font-size: 10vw;
-}
+    }
     .article h3{
     font-size: 4vw;
-}
+    }
     .error h4{
     margin-top:20em;
     font-size: 4vw;
-}
+    }
     .showcase_content img{
     text-align: center;
     margin: 0 2vw 2vh 0;
     width: 25vw;
-}
+    }
     .img{
         top:12%;
         width: 6em;
@@ -409,4 +415,4 @@ a{
     .form{
         transform: scale(2,2);
     }
-}
+    }
