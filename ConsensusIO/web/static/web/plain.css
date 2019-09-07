@@ -114,6 +114,7 @@ li{
 }
 @media (max-width:800px){
     .img{
+        top:12%;
         width: 6em;
     }
     #main-footer{

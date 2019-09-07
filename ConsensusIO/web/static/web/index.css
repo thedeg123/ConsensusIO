@@ -172,6 +172,7 @@ a:active{
         font-size: 10vw;
     }
     .img{
+        top:12%;
         width: 6em;
     }
     .box img{
