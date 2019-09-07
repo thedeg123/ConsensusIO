@@ -55,7 +55,7 @@ class AbstractModel:
             '''
             updates model, partially fitting to new dataset, overrides old file
             '''
-            self.model.partial_fit(np.nan_to_num(self.transform(X).toarray()), y)
+            self.model.partial_fit(np.nan_to_num(self.transform(X).toarray(), posinf=0.0, neginf=0.0), y) 
             with open(self.model_path, 'wb') as f:
                 dump({'model': self.model, 'transformer': self.transformer},f)
 

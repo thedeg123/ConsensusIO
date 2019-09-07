@@ -7,7 +7,7 @@ def get_price(company, date):
     except IEXQueryError:
         return None
     except IndexError:
-        key = 'pk_160ccf5ccda840c080e88774c8ef5837'
+        key = ''
         try:
             query = iexStock(company.ticker, token=key).get_book()['quote']
         except IEXQueryError:

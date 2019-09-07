@@ -65,7 +65,7 @@ class NewsApiWrapper:
             returns 
                 -- the query set of the newly added articles that are financial
         '''
-        db_key = '8e500c992adf43d680f652f336311b61'
+        db_key = ''
         query_set = NewsApiClient(api_key=db_key).get_everything(
                                  q=query_value,
                                  from_param=self.start_date.strftime('%Y-%m-%d'),
