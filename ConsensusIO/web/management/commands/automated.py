@@ -3,7 +3,7 @@ from web.models import Article, Company
 from NewsClassifier.ClassifierModels import *
 from django.utils import timezone
 from datetime import timedelta
-
+from web.views import IndexView
 import logging
 
 class Command(BaseCommand):
@@ -12,6 +12,7 @@ class Command(BaseCommand):
         logging.basicConfig(filename='testing.log',level=logging.DEBUG)
         self.remove_old_news()
         self.update_models()
+        self.load_homescreen()
 
     def update_models(self):
         def prepare_set(X):
@@ -43,7 +44,7 @@ class Command(BaseCommand):
             logging.warning("No updates to models at "+str(timezone.now()))
         
     def load_homescreen(self):
-        return
+        IndexView().get_queryset()
     def remove_old_news(self):
         '''
         deletes all news from the database that is more than one month old
