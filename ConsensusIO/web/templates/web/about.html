@@ -63,6 +63,7 @@
     <div class="notes">
     <h2>Notes</h2>
         <ol>
+            <li>The verify set remained constant across all test. A set of 100 articles was used.</li>
             <li><img class="math" src="{% static 'web/images/note_one.png' %}"></img></li>
             <li>Online learning in this case consists of reviewing articles to increase the size of <i>Sp</i> and <i>Sn</i> respectively.</li>
             <li>Due to the small size and high complexity of the training set, all models performed within 0.02 accuracy of one
@@ -83,6 +84,10 @@
             criticized decline also view information warn Value Stock Support business bear oldies Common Stock S&P 500 S&P 500 ten
             Capital Expenditure Allegion”</i>
             </li>
+            <li>The Movie review set consisted of 5,000 negative articles and 5,000 positive articles. Data was graciously provided
+            free of charge via the following paper:<br> <i>Maas, A., Daly, R., Pham, P., Huang, D., Ng, A. and Potts, C. (2011). Learning Word Vectors for Sentiment Analysis:
+            Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies.
+            [online] Portland, Oregon, USA: Association for Computational Linguistics, pp.142–150.</i> </li>
             <li>The breakdown of the financial vs not financial set was as follows: 5000 financial, 1667
             political, 1667 sports, 1667 technology. Data was graciously provided free of charge via WebHose.</li>
         </ol>
@@ -123,6 +128,11 @@
     <h3><i>- Why can I see only so few articles at a time?</i></h3>
         <p class="answer">Due to the free nature of the NewsAPI, the platform is limited to 500 articles a day. Therefore to ensure some form of
         usability, the article sets are limited per API call to a minimum of 10 per batch.
+        </p>
+    <h3><i>- What about concept drift?</i></h3>
+        <p class="answer">As of yet, ConsensusIO has no fancy solution to deal with concept drift. The new and old models are automatically tested
+        on a preprocessed corpus of 100 entries. The new model is put into production only if it performs better (higher
+        accuracy) on the verification corpus than the old model.
         </p>
     </div>
     <h2>Contact</h2>
