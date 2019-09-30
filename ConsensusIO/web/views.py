@@ -32,6 +32,8 @@ class IndexView(ListView):
             news_wrapper.update_company(company, look_back=2, min_articles=10)
         for common in common_search_set:
             news_wrapper.update_company(common, look_back=2, min_articles=10)
+        for crypto in crypto_set:
+            news_wrapper.update_company(crypto, look_back=2, min_articles=10)
         company_set = company_set if type(company_set) is list else [company_set]
         return {'company_set': company_set,
                 'common_set': common_search_set,
@@ -75,7 +77,7 @@ class SearchView(ListView):
         sentiment_set = self.fetch_sentiment_set(company)
         if not sentiment_set[0]:
             return sentiment_set[1]
-        form_articles=self.fetch_form_article_set(sentiment_set[1])
+        form_articles = self.fetch_form_article_set(sentiment_set[1])
         try:
             price = get_price(company, self.today)
         except ConnectionError:
